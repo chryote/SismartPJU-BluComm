@@ -6,4 +6,23 @@
     </style>
 
     <style name="Theme.SismartPJU" parent="Base.Theme.SismartPJU" />
+
+    <style name="primaryteks">
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="secondaryteks">
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="thirdteks">
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>
