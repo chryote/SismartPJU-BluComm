@@ -17,6 +17,7 @@ import androidx.core.widget.doOnTextChanged
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+
     private var isPasswordVisible = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
