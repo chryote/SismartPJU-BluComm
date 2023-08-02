@@ -1,13 +1,12 @@
 package com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.Pekerjaan
 import com.rifqipadisiliwangi.sismartpju.databinding.ItemPekerjaanBinding
-import com.rifqipadisiliwangi.sismartpju.view.penanganan.pekerjaan.TambahPekerjaanActivity
+import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 
 class AdapterPekerjaanItem(private var pekerjaan : ArrayList<Pekerjaan>): RecyclerView.Adapter<AdapterPekerjaanItem.ListViewHolder>() {
 
@@ -31,7 +30,7 @@ class AdapterPekerjaanItem(private var pekerjaan : ArrayList<Pekerjaan>): Recycl
 
         holder.binding.btnDetail.setOnClickListener {
             val context = it.context
-            context.startActivity(Intent(it.context, TambahPekerjaanActivity::class.java))
+            context.startActivity(Intent(it.context, DetailPekerjaanActivity::class.java))
         }
     }
 
