@@ -63,22 +63,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivSetImage"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_marginBottom="18dp"-->
-<!--                app:cardCornerRadius="30dp"-->
-<!--                android:backgroundTint="@color/warna_background_rounded_dokumen"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/tvNamaUser"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/ivSetImage">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:src="@drawable/ic_baseline_camera_alt_24"/>-->
-
-            <!--            </androidx.cardview.widget.CardView>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,5 +169,20 @@
         android:textColor="@color/grey_font"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_password"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        style="@style/firstbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:fontFamily="@font/inter_medium"
+        android:padding="@dimen/_12sdp"
+        android:text="Keluar"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

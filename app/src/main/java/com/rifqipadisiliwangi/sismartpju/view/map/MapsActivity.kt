@@ -1,4 +1,4 @@
-package com.rifqipadisiliwangi.sismartpju.view.home.fragment
+package com.rifqipadisiliwangi.sismartpju.view.map
 
 import android.Manifest
 import android.content.Context
@@ -8,33 +8,31 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.PekerjaanSingleton
-import com.rifqipadisiliwangi.sismartpju.databinding.FragmentHomeBinding
-import com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan.AdapterPekerjaanItem
-import com.rifqipadisiliwangi.sismartpju.view.map.MapsActivity
+import com.rifqipadisiliwangi.sismartpju.R
+import com.rifqipadisiliwangi.sismartpju.databinding.ActivityMapsBinding
 
-class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnMapClickListener  {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnMapClickListener {
 
-    private lateinit var binding : FragmentHomeBinding
+    private lateinit var binding : ActivityMapsBinding
 
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
@@ -44,32 +42,32 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private var latitude: String? = null
     private var longitude: String? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater,container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recyclerShown()
-
-        binding.cvMaps.setOnClickListener {
-            startActivity(Intent(context, MapsActivity::class.java))
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMapsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
 
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        locationManager = requireActivity().getSystemService(
-            Context.LOCATION_SERVICE
-        ) as LocationManager
+        val extras = intent.extras
+        if (extras != null && extras.containsKey("latitude") && extras.containsKey("longitude")) {
+            latitude = extras.getString("latitude")
+            longitude = extras.getString("longitude")
+        }
 
+        val submitButton = findViewById<RelativeLayout>(R.id.btn_submit)
+        submitButton.setOnClickListener {
+            onSubmitButtonClick()
+        }
 
+        val backButton = findViewById<ImageView>(R.id.btn_back)
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -82,7 +80,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         googleMap.setOnMapClickListener(this)
 
         // Check for location permission
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
             // Check if GPS is enabled
@@ -108,7 +106,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
                     // For example, move the camera
                     // Get the user's current location
-                    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+                    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
                     fusedLocationProviderClient.lastLocation
                         .addOnSuccessListener { location: Location? ->
                             if (location != null) {
@@ -131,7 +129,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         } else {
             // Request location permission
             ActivityCompat.requestPermissions(
-                requireActivity(),
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
@@ -149,10 +147,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 // Check if GPS is enabled
                 if (isGPSEnabled()) {
                     if (ActivityCompat.checkSelfPermission(
-                            requireActivity(),
+                            this,
                             Manifest.permission.ACCESS_FINE_LOCATION
                         ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            requireActivity(),
+                            this,
                             Manifest.permission.ACCESS_COARSE_LOCATION
                         ) != PackageManager.PERMISSION_GRANTED
                     ) {
@@ -195,6 +193,30 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
     }
 
+    private fun onSubmitButtonClick() {
+        val markerPosition = marker?.position
+        if (markerPosition != null) {
+            val latitude = markerPosition.latitude
+            val longitude = markerPosition.longitude
+            // Save the latitude and longitude to shared preferences
+//            val editor = sharedPreferences.edit()
+//            editor.putFloat("latitude", latitude.toFloat())
+//            editor.putFloat("longitude", longitude.toFloat())
+//            editor.apply()
+//            showToast("Location saved to shared preferences!")
+
+            val resultIntent = Intent()
+            resultIntent.putExtra("latitude", latitude)
+            resultIntent.putExtra("longitude", longitude)
+            setResult(RESULT_OK, resultIntent)
+            showToast("Location saved successful!")
+            finish()
+
+        } else {
+            showToast("No location selected!")
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
@@ -230,7 +252,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     }
 
     private fun showGPSDisabledDialog() {
-        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        val dialogBuilder = AlertDialog.Builder(this)
         dialogBuilder.setMessage("GPS is disabled. Enable GPS in the device settings to use this feature.")
             .setCancelable(false)
             .setPositiveButton("Settings") { dialog: DialogInterface, _: Int ->
@@ -246,23 +268,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         alert.setOnShowListener {
             // Set custom style for the positive button (Yes)
             alert.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
-                ContextCompat.getColor(requireActivity(), android.R.color.black))
+                ContextCompat.getColor(this@MapsActivity, android.R.color.black))
             // Set custom style for the negative button (No)
             alert.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
-                ContextCompat.getColor(requireActivity(), android.R.color.black))
+                ContextCompat.getColor(this@MapsActivity, android.R.color.black))
         }
         alert.show()
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
-
-    private fun recyclerShown(){
-        binding.rvMonitoring.adapter = AdapterPekerjaanItem(PekerjaanSingleton.listPekerjaan)
-        binding.rvMonitoring.layoutManager =  LinearLayoutManager(requireActivity())
-        binding.rvMonitoring.isNestedScrollingEnabled = false
-    }
-
 }
