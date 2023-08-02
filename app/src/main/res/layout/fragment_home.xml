@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="@dimen/_16sdp"
-    android:background="@color/grey_bg"
+    android:background="@color/bg_color"
     tools:context=".view.home.fragment.HomeFragment">
 
     <TextView

@@ -13,13 +13,23 @@
         android:theme="@style/Theme.SismartPJU"
         tools:targetApi="31">
         <activity
+            android:name=".view.penanganan.pekerjaan.TambahPekerjaanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.penanganan.spesifikasi.SpesifikasiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.pairing.pairingsatu.AddpairingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.pairing.pairingdua.PairingDuaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.pairing.pairingsatu.PairingSatuActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.home.DashboardActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            android:exported="true" />
         <activity
             android:name=".view.auth.RegisterActivity"
             android:exported="false" />
@@ -28,7 +38,15 @@
             android:exported="false" />
         <activity
             android:name=".view.splash.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true" >
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".MainActivity"

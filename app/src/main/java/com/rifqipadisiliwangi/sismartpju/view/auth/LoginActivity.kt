@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import androidx.core.view.isGone
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
+import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -23,6 +24,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(this, DashboardActivity::class.java))
+        }
 
         binding.showPassBtn.setOnClickListener {
             isPasswordVisible = !isPasswordVisible

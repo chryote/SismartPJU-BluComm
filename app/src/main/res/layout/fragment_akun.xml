@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_bg"
+    android:background="@color/bg_color"
     android:paddingHorizontal="@dimen/_16sdp"
     tools:context=".view.home.fragment.AkunFragment">
-
 
     <TextView
         android:id="@+id/tvTittle"
@@ -107,5 +106,84 @@
         android:layout_marginVertical="@dimen/_34sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardIdentity"/>
+
+    <TextView
+        android:id="@+id/tv_title_fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Lengkap"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/_34sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_information"/>
+
+    <TextView
+        android:id="@+id/tv_fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Lengkap"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/_11sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/grey_font"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_fullname"/>
+
+    <TextView
+        android:id="@+id/tv_title_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/_11sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fullname"/>
+
+    <TextView
+        android:id="@+id/tv_useremail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/_11sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/grey_font"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_email"/>
+
+    <TextView
+        android:id="@+id/tv_title_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/_11sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_useremail"/>
+
+    <TextView
+        android:id="@+id/tv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="@dimen/_16ssp"
+        android:textAlignment="center"
+        android:inputType="textPassword"
+        android:layout_marginVertical="@dimen/_11sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/grey_font"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_password"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
