@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_136sdp"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_white_grey">
+
+        <ImageView
+            android:id="@+id/iv_spesifikasi"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_42sdp"
+            android:background="@drawable/ic_akun"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_title_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="center_vertical"
+            android:text="ID"
+            android:textColor="@color/dark_blue"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textAlignment="center"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
+            app:layout_constraintTop_toTopOf="@+id/iv_spesifikasi"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="center_vertical"
+            android:text=": 9758378"
+            android:textAlignment="center"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/grey_font"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/tv_title_id"
+            app:layout_constraintTop_toTopOf="@+id/iv_spesifikasi"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="center_vertical"
+            android:text="Jl. Affandi, Depok, Sleman"
+            android:maxLines="3"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/grey_font"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_id"
+            tools:ignore="RtlCompat" />
+
+
+        <TextView
+            android:id="@+id/tv_id_pju"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="center_vertical"
+            android:text="12345"
+            android:textAlignment="center"
+            android:textColor="@color/grey_font"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_jenis"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="RtlCompat" />
+
+
+        <TextView
+            android:id="@+id/tv_jenis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="center_vertical"
+            android:text="Jenis Kerusakan"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="RtlCompat" />
+
+        <Button
+            android:id="@+id/btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Detail"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/dark_blue"
+            app:layout_constraintTop_toTopOf="@+id/tv_id" />
+
+        <TextView
+            android:id="@+id/tv_alert"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Lampu Mati"
+            android:gravity="center_vertical"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:background="@color/light_yellow"
+            android:textColor="@color/dark_yellow"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_detail"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="@dimen/_170sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="center_vertical"
+            android:text="Lorem, ipsum, is placeholder,Lorem, ipsum, is placeholder"
+            android:textAlignment="viewEnd"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_font"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="RtlCompat" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

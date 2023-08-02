@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/search_irrigation_field"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_irrigation"
+        android:id="@+id/rv_pekerjaan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/_10sdp"
