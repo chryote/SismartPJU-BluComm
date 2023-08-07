@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rifqipadisiliwangi.sismartpju.databinding.FragmentPerangkatBinding
 import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingdua.PairingDuaActivity
+import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu.AddPairingActivity
 import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu.PairingSatuActivity
 
 class PerangkatFragment : Fragment() {
@@ -26,11 +27,11 @@ class PerangkatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.modePairingOne.setOnClickListener {
-            startActivity(Intent(context, PairingSatuActivity::class.java))
+        binding.llModeBluetooth.setOnClickListener {
+            startActivity(Intent(context, AddPairingActivity::class.java))
         }
 
-        binding.modePairingTwo.setOnClickListener {
+        binding.llModeKontroller.setOnClickListener {
             startActivity(Intent(context, PairingDuaActivity::class.java))
         }
     }

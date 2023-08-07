@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg"
+    tools:context=".view.pairing.pairingdua.AddControllerActivity">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        android:padding="@dimen/_10sdp"
+        android:elevation="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/top_bar"
+            app:layout_constraintTop_toTopOf="@+id/top_bar"
+            app:layout_constraintBottom_toBottomOf="@+id/top_bar"
+            android:src="@drawable/ic_arrow_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Mode Kontroller"
+            android:textSize="@dimen/_18ssp"
+            android:layout_marginVertical="17dp"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/dark_blue"
+            app:layout_constraintStart_toStartOf="@+id/top_bar"
+            app:layout_constraintEnd_toEndOf="@+id/top_bar"
+            app:layout_constraintTop_toTopOf="@+id/top_bar"
+            app:layout_constraintBottom_toBottomOf="@+id/top_bar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/const_field_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_28sdp">
+
+            <ImageView
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/progressbar_two"
+                app:layout_constraintTop_toTopOf="@id/const_field_add"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintEnd_toEndOf="@id/const_field_add"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_konroller"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@+id/progressbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/dark_blue">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="@dimen/_76sdp"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        android:src="@drawable/ic_launcher_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_pju"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="Controller"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                    <TextView
+                        android:id="@+id/tv_unik_key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="43253"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pju" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_tittle_questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Masukan ID PJU:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/cv_konroller" />
+
+
+            <RelativeLayout
+                android:id="@+id/rv_pju"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_questions"
+                app:layout_constraintStart_toStartOf="@+id/const_field_add"
+                android:background="@drawable/rounded_grey">
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/sp_id_pju"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    app:smsp_arrowSize="0dp"
+                    app:smsp_hint="Masukan ID PJU"
+                    app:smsp_itemColor="@color/black"
+                    app:smsp_itemListColor="@color/black"
+                    app:smsp_itemListHintBackgroundColor="#808080"
+                    app:smsp_itemListHintColor="#FFFFFF"
+                    app:smsp_floatingLabelColor="@color/white"
+                    app:smsp_multilineError="false"
+                    app:smsp_isSearchable="false"
+                    app:smsp_underlineColor="@color/white"
+                    app:smsp_selectedItemListColor="@color/dark_blue"
+                    tools:ignore="DuplicateIds"  />
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/tv_add_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_12sdp"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/black"
+                android:hint="Tambah lokasi :"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
+            <TextView
+                android:id="@+id/tv_change_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_12sdp"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/dark_blue"
+                android:text="Ubah"
+                app:layout_constraintEnd_toEndOf="@+id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_map_marker"
+                android:layout_marginVertical="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_location" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:text="Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta"
+                android:textSize="@dimen/_14ssp"
+                android:maxLines="3"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/grey_font"
+                app:layout_constraintStart_toEndOf="@+id/iv_location"
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_location"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="@+id/const_field_add"
+            app:layout_constraintStart_toStartOf="@+id/const_field_add"
+            app:layout_constraintEnd_toEndOf="@+id/const_field_add"
+            android:background="@color/dark_blue">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambahkan"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:fontFamily="@font/inter_semi_bold"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

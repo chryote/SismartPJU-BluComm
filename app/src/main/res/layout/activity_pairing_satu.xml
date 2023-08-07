@@ -7,6 +7,8 @@
     android:background="@color/bg_color"
     tools:context=".view.pairing.pairingsatu.PairingSatuActivity">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
@@ -32,11 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Mode Satu"
-            android:textSize="@dimen/_16ssp"
+            android:text="Mode Kontroller"
+            android:textSize="@dimen/_18ssp"
             android:layout_marginVertical="17dp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/top_bar"
             app:layout_constraintEnd_toEndOf="@+id/top_bar"
             app:layout_constraintTop_toTopOf="@+id/top_bar"
@@ -44,10 +46,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_height="600dp"
         android:layout_marginHorizontal="@dimen/_20sdp"
         app:layout_constraintTop_toBottomOf="@+id/top_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,77 +59,218 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/const_field_add"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_28sdp">
-
 
             <ImageView
                 android:id="@+id/progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/progressbar_one"
+                android:src="@drawable/progressbar_two"
                 app:layout_constraintTop_toTopOf="@id/const_field_add"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
                 app:layout_constraintEnd_toEndOf="@id/const_field_add"/>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_konroller"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@+id/progressbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/dark_blue">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="@dimen/_76sdp"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        android:src="@drawable/ic_launcher_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_pju"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="Controller"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                    <TextView
+                        android:id="@+id/tv_unik_key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="43253"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pju" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
             <TextView
-                android:id="@+id/tv_tittle_key"
+                android:id="@+id/tv_tittle_koordinator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/inter_medium"
-                android:textSize="@dimen/_12ssp"
-                android:text="Masukkan Key : "
-                android:layout_marginVertical="@dimen/_40sdp"
-                app:layout_constraintTop_toBottomOf="@+id/progressbar"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"/>
-
-            <EditText
-                android:id="@+id/et_content_key"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:fontFamily="@font/inter_regular"
-                android:textSize="@dimen/_12ssp"
-                android:paddingStart="@dimen/_10sdp"
-                android:background="@drawable/rounded_grey"
-                android:textColor="@color/grey_font_detail"
-                android:textColorHint="@color/grey_font_detail"
-                android:hint="Masukkan Key"
                 android:layout_marginVertical="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="@+id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_key"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"/>
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Pilih koordinator :"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/cv_konroller" />
+
+
+            <RelativeLayout
+                android:id="@+id/rv_koordinator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_koordinator"
+                app:layout_constraintStart_toStartOf="@+id/const_field_add"
+                android:background="@drawable/rounded_grey">
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/sp_id_koordinator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    app:smsp_arrowSize="0dp"
+                    app:smsp_hint="Coordinator Jl Afandi (4823298520953)"
+                    app:smsp_itemColor="@color/black"
+                    app:smsp_itemListColor="@color/black"
+                    app:smsp_itemListHintBackgroundColor="#808080"
+                    app:smsp_itemListHintColor="#FFFFFF"
+                    app:smsp_floatingLabelColor="@color/white"
+                    app:smsp_multilineError="false"
+                    app:smsp_isSearchable="false"
+                    app:smsp_underlineColor="@color/white"
+                    app:smsp_selectedItemListColor="@color/dark_blue"
+                    tools:ignore="DuplicateIds"  />
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_tittle_questions"
+                android:id="@+id/tv_tittle_pju"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Masukan ID PJU:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/rv_koordinator" />
+
+
+            <RelativeLayout
+                android:id="@+id/rv_pju"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_pju"
+                app:layout_constraintStart_toStartOf="@+id/const_field_add"
+                android:background="@drawable/rounded_grey">
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/sp_id_pju"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    app:smsp_arrowSize="0dp"
+                    app:smsp_hint="5253252525"
+                    app:smsp_itemColor="@color/black"
+                    app:smsp_itemListColor="@color/black"
+                    app:smsp_itemListHintBackgroundColor="#808080"
+                    app:smsp_itemListHintColor="#FFFFFF"
+                    app:smsp_floatingLabelColor="@color/white"
+                    app:smsp_multilineError="false"
+                    app:smsp_isSearchable="false"
+                    app:smsp_underlineColor="@color/white"
+                    app:smsp_selectedItemListColor="@color/dark_blue"
+                    tools:ignore="DuplicateIds"  />
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/tv_add_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_12sdp"
-                android:layout_marginTop="12dp"
-                android:text="Masukan ID PJU:"
-                android:textColor="@color/black"
                 android:fontFamily="@font/inter_medium"
-                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:hint="Tambah lokasi :"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/et_content_key" />
-
-            <EditText
-                android:id="@+id/et_content_question"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_81sdp"
-                android:textColor="@color/grey_font_detail"
-                android:textColorHint="@color/grey_font_detail"
-                android:fontFamily="@font/inter_regular"
+                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
+            <TextView
+                android:id="@+id/tv_change_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_12sdp"
                 android:textSize="@dimen/_12ssp"
-                android:gravity="top"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:background="@drawable/rounded_grey"
-                android:hint="Masukan ID PJU:"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/dark_blue"
+                android:text="Ubah"
+                app:layout_constraintEnd_toEndOf="@+id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_map_marker"
+                android:layout_marginVertical="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_location" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:text="Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta"
+                android:textSize="@dimen/_14ssp"
+                android:maxLines="3"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_questions"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"/>
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/grey_font"
+                app:layout_constraintStart_toEndOf="@+id/iv_location"
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_location"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,7 +290,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selanjutnya"
+                android:text="Tambahkan"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:layout_marginStart="@dimen/_12sdp"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityTambahPekerjaanBinding
+import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 import com.rifqipadisiliwangi.sismartpju.view.penanganan.spesifikasi.SpesifikasiActivity
 
@@ -23,6 +24,11 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
 
         binding.ivBack.setOnClickListener {
+            startActivity(Intent(this, DetailPekerjaanActivity::class.java))
+            finish()
+        }
+
+        binding.btnAdd.setOnClickListener {
             startActivity(Intent(this, DashboardActivity::class.java))
             finish()
         }

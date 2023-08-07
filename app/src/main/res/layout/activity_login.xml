@@ -27,7 +27,7 @@
         android:text="Selamat Datang"
         android:fontFamily="@font/inter_semi_bold"
         android:textColor="@color/semi_black"
-        android:textSize="@dimen/_20ssp"/>
+        android:textSize="@dimen/_24ssp"/>
 
     <TextView
         android:id="@+id/txt_description"
@@ -36,17 +36,17 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Silakan isikan data dengan benar untuk tahap\n selanjutnya"
-        android:fontFamily="@font/inter_regular"
+        android:text="Dinas Perhubungan Kabupaten Sleman"
+        android:fontFamily="@font/inter_medium"
         android:textColor="@color/grey_font"
-        android:textSize="@dimen/_12ssp"/>
+        android:textSize="@dimen/_14ssp"/>
 
     <RelativeLayout
         android:id="@+id/lyt_phone"
         android:layout_below="@+id/txt_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_50sdp"
         android:padding="@dimen/_10sdp"
         android:background="@drawable/grey_et_border">
 
@@ -93,13 +93,14 @@
 
     <Button
         android:id="@+id/btnLogin"
+        style="@style/firstbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/firstbutton"
-        android:layout_below="@+id/lyt_password"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_150sdp"
         android:fontFamily="@font/inter_medium"
         android:padding="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_30sdp"
         android:text="Masuk"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,114 +108,19 @@
 
     <Button
         android:id="@+id/btnLoginInvisible"
+        style="@style/secondbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/secondbutton"
-        android:layout_below="@+id/lyt_password"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:fontFamily="@font/inter_medium"
         android:padding="@dimen/_12sdp"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/_30sdp"
         android:text="Masuk"
+        android:visibility="gone"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_mark"
-        android:layout_marginBottom="@dimen/_50sdp">
-
-        <LinearLayout
-            android:id="@+id/lyt_forget_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="101dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="Lupa password?"
-                android:textAlignment="center"
-                android:textColor="@color/grey_font"
-                android:textSize="@dimen/_12ssp" />
-
-            <TextView
-                android:id="@+id/txt_forget_pass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semi_bold"
-                android:padding="@dimen/_10sdp"
-                android:text="Disini"
-                android:textAlignment="center"
-                android:textColor="@color/dark_blue"
-                android:textSize="@dimen/_12ssp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lyt_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lyt_forget_pass"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="Belum memiliki akun?"
-                android:textAlignment="center"
-                android:textColor="@color/grey_font"
-                android:textSize="@dimen/_12ssp" />
-
-            <TextView
-                android:id="@+id/txt_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semi_bold"
-                android:padding="@dimen/_10sdp"
-                android:text="Register"
-                android:textAlignment="center"
-                android:textColor="@color/dark_blue"
-                android:textSize="@dimen/_12ssp" />
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-    <TextView
-        android:id="@+id/tv_mark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:text="Dibuat Oleh"
-        android:layout_above="@+id/kemendagri_logo"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="@color/grey_font"
-        android:textSize="@dimen/_10ssp"/>
-
-    <ImageView
-        android:id="@+id/kemendagri_logo"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:src="@drawable/ic_launcher_background"/>
 
 </RelativeLayout>

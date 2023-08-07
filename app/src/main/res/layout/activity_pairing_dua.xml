@@ -32,11 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Mode Dua"
-            android:textSize="@dimen/_16ssp"
+            android:text="Mode Kontroller"
             android:layout_marginVertical="17dp"
+            android:textSize="@dimen/_18ssp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/top_bar"
             app:layout_constraintEnd_toEndOf="@+id/top_bar"
             app:layout_constraintTop_toTopOf="@+id/top_bar"
@@ -44,10 +44,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_height="600dp"
         android:layout_marginHorizontal="@dimen/_20sdp"
         app:layout_constraintTop_toBottomOf="@+id/top_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,18 +61,27 @@
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_28sdp">
 
+            <ImageView
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/progressbar_one"
+                app:layout_constraintTop_toTopOf="@id/const_field_add"
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintEnd_toEndOf="@id/const_field_add"/>
+
             <TextView
                 android:id="@+id/tv_tittle_coordinator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_12sdp"
                 android:layout_marginTop="12dp"
-                android:text="Masukkan Koordinator :"
+                android:text="Pilih Koordinator :"
                 android:textColor="@color/black"
                 android:fontFamily="@font/inter_medium"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toTopOf="@+id/const_field_add"/>
+                app:layout_constraintTop_toBottomOf="@+id/progressbar"/>
 
 
             <RelativeLayout
@@ -112,6 +120,22 @@
 
             </RelativeLayout>
 
+
+            <Button
+                android:id="@+id/btn_zigbee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/optionbutton"
+                android:fontFamily="@font/inter_medium"
+                android:padding="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:text="Pindai kontroller via Zigbee"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@+id/rv_coordinator"
+                android:layout_marginBottom="@dimen/_50sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/tv_tittle_kontroler"
                 android:layout_width="wrap_content"
@@ -119,45 +143,10 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/inter_medium"
                 android:textSize="@dimen/_12ssp"
-                android:text="Cari Kontroller :"
+                android:text="Kontroller terdeteksi :"
                 android:layout_marginVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/rv_coordinator"
+                app:layout_constraintTop_toBottomOf="@+id/btn_zigbee"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"/>
-
-
-            <RelativeLayout
-                android:id="@+id/search_controller"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:background="@drawable/rounded_grey"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_kontroler"
-                app:layout_constraintStart_toStartOf="@id/const_field_add">
-
-                <EditText
-                    android:id="@+id/et_search_irrigation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:hint="Cari Kontroller"
-                    android:fontFamily="@font/inter_regular"
-                    android:textSize="@dimen/_12ssp"
-                    android:inputType="textLongMessage"
-                    android:padding="@dimen/_10sdp" />
-
-                <ImageView
-                    android:id="@+id/iv_search"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:src="@drawable/baseline_search_24" />
-
-            </RelativeLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -166,105 +155,8 @@
                 android:layout_height="@dimen/_150sdp"
                 android:background="@drawable/rounded_grey"
                 android:layout_marginVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/search_controller"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_kontroler"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"/>
-
-            <TextView
-                android:id="@+id/tv_tittle_questions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/inter_medium"
-                android:text="Masukan ID PJU:"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/rv_kontroler" />
-
-
-            <RelativeLayout
-                android:id="@+id/rv_pju"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tittle_questions"
-                app:layout_constraintStart_toStartOf="@+id/const_field_add"
-                android:background="@drawable/rounded_grey">
-
-                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                    android:id="@+id/sp_id_pju"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    app:smsp_arrowSize="0dp"
-                    app:smsp_hint="Masukan ID PJU"
-                    app:smsp_itemColor="@color/black"
-                    app:smsp_itemListColor="@color/black"
-                    app:smsp_itemListHintBackgroundColor="#808080"
-                    app:smsp_itemListHintColor="#FFFFFF"
-                    app:smsp_floatingLabelColor="@color/white"
-                    app:smsp_multilineError="false"
-                    app:smsp_isSearchable="false"
-                    app:smsp_underlineColor="@color/white"
-                    app:smsp_selectedItemListColor="@color/dark_blue"
-                    tools:ignore="DuplicateIds"  />
-
-                <ImageView
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_arrow_down" />
-
-            </RelativeLayout>
-
-
-
-            <TextView
-                android:id="@+id/tv_add_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:fontFamily="@font/inter_medium"
-                android:textColor="@color/black"
-                android:hint="Tambah lokasi :"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
-            <TextView
-                android:id="@+id/tv_change_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:textSize="@dimen/_12ssp"
-                android:fontFamily="@font/inter_bold"
-                android:textColor="@color/dark_blue"
-                android:text="Ubah"
-                app:layout_constraintEnd_toEndOf="@+id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/rv_pju" />
-
-            <ImageView
-                android:id="@+id/iv_location"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_map_marker"
-                android:layout_marginVertical="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/tv_add_location" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="wrap_content"
-                android:text="Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta"
-                android:textSize="@dimen/_14ssp"
-                android:maxLines="3"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:fontFamily="@font/inter_medium"
-                android:textColor="@color/grey_font"
-                app:layout_constraintStart_toEndOf="@+id/iv_location"
-                app:layout_constraintTop_toBottomOf="@+id/tv_add_location"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

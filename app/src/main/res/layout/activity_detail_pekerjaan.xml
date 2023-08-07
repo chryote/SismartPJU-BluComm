@@ -32,11 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Penanganan"
-            android:textSize="@dimen/_16ssp"
+            android:text="Detail Pekerjaan"
             android:layout_marginVertical="17dp"
+            android:textSize="@dimen/_18ssp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/top_bar"
             app:layout_constraintEnd_toEndOf="@+id/top_bar"
             app:layout_constraintTop_toTopOf="@+id/top_bar"
@@ -46,13 +46,14 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_550sdp"
-        android:layout_marginVertical="@dimen/_40sdp"
+        android:layout_height="640dp"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginVertical="@dimen/_40sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/const_field_add"
@@ -65,10 +66,10 @@
                 android:id="@+id/cv_maps"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_157sdp"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintTop_toTopOf="@+id/const_field_add"
+                android:outlineSpotShadowColor="@color/grey_bg"
                 app:cardCornerRadius="@dimen/_10sdp"
-                android:outlineSpotShadowColor="@color/grey_bg">
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toTopOf="@+id/const_field_add">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -96,28 +97,30 @@
                 android:id="@+id/tv_title_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
-                android:gravity="center_vertical"
-                android:text="ID"
-                android:textColor="@color/dark_blue"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/inter_semi_bold"
+                android:gravity="center_vertical"
+                android:text="pk42394"
                 android:textAlignment="center"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_20ssp"
                 app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
                 app:layout_constraintTop_toTopOf="@+id/iv_spesifikasi"
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/tv_id"
+                android:id="@+id/tv_title_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
+                android:fontFamily="@font/inter_regular"
                 android:gravity="center_vertical"
-                android:text=": 9758378"
+                android:text="2023-01-20 16:14:26"
                 android:textAlignment="center"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toStartOf="@+id/tv_id_pju"
-                app:layout_constraintTop_toTopOf="@+id/iv_spesifikasi"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_pju"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_title_id"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -125,92 +128,100 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/inter_medium"
+                android:fontFamily="@font/inter_semi_bold"
                 android:gravity="center_vertical"
-                android:text="ID PJU "
-                android:textColor="@color/dark_blue"
+                android:text="PJU GEJ123"
                 android:textAlignment="center"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_id"
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/tv_id_pju"
+                android:id="@+id/tv_title_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/inter_medium"
-                android:gravity="center_vertical"
-                android:text=": 9758378"
-                android:textAlignment="center"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toEndOf="@+id/tv_title_pju"
-                app:layout_constraintTop_toBottomOf="@+id/tv_id"
-                tools:ignore="RtlCompat" />
-
-            <TextView
-                android:id="@+id/tv_title_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
-                android:gravity="center_vertical"
-                android:text="Status"
                 android:layout_marginVertical="@dimen/_18sdp"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center_vertical"
+                android:text="Gejayan 1, Yogyakarta,Indonesia, "
                 android:textAlignment="center"
-                android:textColor="@color/dark_blue"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_spesifikasi"
-                tools:ignore="RtlCompat" />
-
-            <TextView
-                android:id="@+id/tv_tingkat_3"
-                android:layout_width="@dimen/_280sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginVertical="@dimen/_5sdp"
-                android:fontFamily="@font/inter_medium"
-                android:textColor="@color/red_button"
-                android:gravity="center_vertical"
-                android:textAlignment="center"
-                android:background="@color/light_red"
-                android:text="Lampu Mati, Arus Turuni, Baterai Rusak"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_status"
-                tools:ignore="RtlCompat" />
-
+                tools:ignore="DuplicateIds,RtlCompat" />
 
             <TextView
                 android:id="@+id/tv_keterangan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
                 android:fontFamily="@font/inter_medium"
                 android:gravity="center_vertical"
-                android:text="Keterangan :"
-                android:layout_marginVertical="@dimen/_18sdp"
+                android:text="Status :"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tingkat_3"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_address"
                 tools:ignore="RtlCompat" />
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tv_note"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
-                android:textColor="@color/grey_font_detail"
-                android:textColorHint="@color/grey_font_detail"
-                android:fontFamily="@font/inter_regular"
-                android:textSize="@dimen/_12ssp"
-                android:gravity="top"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:background="@drawable/rounded_grey_background"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
-                android:background="@drawable/rounded_grey"
-                android:hint="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. "
-                android:layout_marginVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_keterangan"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"/>
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/tv_keterangan" >
+
+
+                <LinearLayout
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlCompat">
+
+                    <TextView
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/rounded_red"
+                        android:text="Baterai"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginHorizontal="5sp"
+                        android:background="@drawable/rounded_orange"
+                        android:text="Lampu"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/rounded_blue"
+                        android:text="Arus"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -218,24 +229,24 @@
             android:id="@+id/btn_add"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
-            android:gravity="center"
             android:layout_gravity="bottom"
+            android:background="@color/dark_blue"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/const_field_add"
-            app:layout_constraintStart_toStartOf="@+id/const_field_add"
             app:layout_constraintEnd_toEndOf="@+id/const_field_add"
-            android:background="@color/dark_blue">
+            app:layout_constraintStart_toStartOf="@+id/const_field_add">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kerjakan"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:fontFamily="@font/inter_semi_bold"
-                android:textSize="@dimen/_12ssp" />
+                android:text="Kerjakan"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

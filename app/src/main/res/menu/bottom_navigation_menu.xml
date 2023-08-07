@@ -5,16 +5,16 @@
         android:title="Dasboard"
         android:icon="@drawable/ic_home" />
     <item
-        android:id="@+id/menu_item_2"
-        android:title="Pekerjaan"
-        android:icon="@drawable/ic_pekerjaan" />
-    <item
         android:id="@+id/menu_item_3"
         android:title="Perangkat"
         android:icon="@drawable/ic_perangkat" />
     <item
+        android:id="@+id/menu_item_2"
+        android:title="Pekerjaan"
+        android:icon="@drawable/ic_pekerjaan" />
+    <item
         android:id="@+id/menu_item_4"
         android:title="Akun"
-        android:icon="@drawable/ic_akun" />
+        android:icon="@drawable/ic_user" />
 </menu>
 

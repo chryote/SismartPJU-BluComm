@@ -22,11 +22,11 @@ class AdapterPekerjaanItem(private var pekerjaan : ArrayList<Pekerjaan>): Recycl
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.binding.tvId.text = pekerjaan[position].idPju
+        holder.binding.tvIdPekerjaan.text = pekerjaan[position].idPju
         holder.binding.tvAddress.text = pekerjaan[position].address
         holder.binding.tvIdPju.text = pekerjaan[position].idPju
-        holder.binding.tvAlert.text = pekerjaan[position].alert
-        holder.binding.tvStatus.text = pekerjaan[position].status
+//        holder.binding.tvAlert.text = pekerjaan[position].alert
+//        holder.binding.tvStatus.text = pekerjaan[position].status
 
         holder.binding.btnDetail.setOnClickListener {
             val context = it.context

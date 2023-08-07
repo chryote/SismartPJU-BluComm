@@ -34,10 +34,6 @@ class LoginActivity : AppCompatActivity() {
             togglePasswordVisibility()
         }
 
-        binding.txtRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
-
         binding.etPassword.addTextChangedListener(object  : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 

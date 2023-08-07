@@ -3,7 +3,6 @@ package com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityPairingSatuBinding
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 
@@ -17,12 +16,12 @@ class PairingSatuActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ivBack.setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            startActivity(Intent(this, AddPairingActivity::class.java))
             finish()
         }
 
         binding.btnNext.setOnClickListener {
-            startActivity(Intent(this, AddpairingActivity::class.java))
+            startActivity(Intent(this, DashboardActivity::class.java))
         }
     }
 }

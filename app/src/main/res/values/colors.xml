@@ -5,6 +5,7 @@
 
     <color name="bg_color">#F3F7FD</color>
     <color name="grey_font">#8B8B8B</color>
+    <color name="secondary_font">#98A5D3</color>
     <color name="semi_black">#00063C</color>
     <color name="medium_blue">#4F9DC9</color>
     <color name="soft_blue">#C4E0F0</color>
@@ -20,5 +21,6 @@
     <color name="light_red">#F7BDB8</color>
     <color name="dark_yellow">#FBBE33</color>
     <color name="light_yellow">#FEE8B8</color>x
+    <color name="dark_green">#84BD00</color>x
 
 </resources>

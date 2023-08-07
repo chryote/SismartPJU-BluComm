@@ -2,6 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" /> <!-- Request legacy Bluetooth permissions on older devices. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <!--
+ Needed only if your app looks for Bluetooth devices.
+         If your app doesn't use Bluetooth scan results to derive physical
+         location information, you can strongly assert that your app
+         doesn't derive physical location.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <!--
+ Needed only if your app makes the device discoverable to Bluetooth
+         devices.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" /> <!-- <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> -->
+    <!--
+ Needed only if your app communicates with already-paired Bluetooth
+         devices.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- Needed only if your app uses Bluetooth scan results to derive physical location. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_*" />
@@ -9,8 +38,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +49,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SismartPJU"
         tools:targetApi="31">
+        <activity
+            android:name=".view.pairing.pairingdua.AddControllerActivity"
+            android:exported="false" />
         <activity
             android:name=".view.detail.DetailPekerjaanActivity"
             android:exported="false" />
@@ -35,8 +65,8 @@
             android:name=".view.penanganan.spesifikasi.SpesifikasiActivity"
             android:exported="false" />
         <activity
-            android:name=".view.pairing.pairingsatu.AddpairingActivity"
-            android:exported="false" />
+            android:name=".view.pairing.pairingsatu.AddPairingActivity"
+            android:exported="true" />
         <activity
             android:name=".view.pairing.pairingdua.PairingDuaActivity"
             android:exported="false" />
@@ -46,9 +76,6 @@
         <activity
             android:name=".view.home.DashboardActivity"
             android:exported="true" />
-        <activity
-            android:name=".view.auth.RegisterActivity"
-            android:exported="false" />
         <activity
             android:name=".view.auth.LoginActivity"
             android:exported="false" />
