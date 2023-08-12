@@ -69,7 +69,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
             Context.LOCATION_SERVICE
         ) as LocationManager
 
-
     }
 
     override fun onMapReady(map: GoogleMap) {

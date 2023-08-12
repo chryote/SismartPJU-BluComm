@@ -1,32 +1,87 @@
 package com.rifqipadisiliwangi.sismartpju.view.auth
 
+import android.R.attr.duration
+import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityLoginBinding
-import android.content.DialogInterface
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.core.view.isGone
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
-import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
+import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingdua.AddControllerActivity
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.IOException
+
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
 
     private var isPasswordVisible = false
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            val mediaType = "text/plain".toMediaType()
+            val body = "{\r\n\"username\": \"${binding.etUsername.text.toString().trimIndent()}\",\r\n\"password\": \"${binding.etPassword.text.toString().trimIndent()}\" \r\n}".toRequestBody(mediaType)
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://sisemarpju.smartlinks.id/dd163577ea063b814f85b490a748d583?")
+                .post(body)
+                .addHeader("Content-Type", "text/plain")
+                .addHeader("Authorization", "Basic RGlzaHVidXNlcjIxMjp1c2VyRGlzaHViMjEy")
+                .build()
+
+            // val responses: Response = client.newCall(requests).execute()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    val loginResponse = e.toString()
+                    loginResponse.let {
+                        Toast.makeText(this@LoginActivity,
+                            "Login failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.isSuccessful) {
+                        val loginResponse = response.body
+                        loginResponse?.let {
+                            response.body?.string()?.let { it1 -> Log.d("okhttp-response", it1) }
+                            startActivity(Intent(this@LoginActivity, AddControllerActivity::class.java))
+                        }
+                        runOnUiThread {
+                            Toast.makeText(this@LoginActivity,
+                                "Login Sukses", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        // Handle API error here
+                        // You can extract the error message from the response
+                        // using response.errorBody()?.string()
+                        runOnUiThread {
+                            Toast.makeText(this@LoginActivity,
+                                "Login failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
         }
 
         binding.showPassBtn.setOnClickListener {
@@ -56,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
     }
+
     private fun togglePasswordVisibility() {
         if (isPasswordVisible) {
             // Show the password
@@ -71,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
         // Move the cursor to the end of the password field to maintain cursor position
         binding.etPassword.setSelection(binding.etPassword.text.length)
     }
-    
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
 
@@ -85,6 +141,10 @@ class LoginActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
             }
             .show()
+    }
+    fun getResponDesc(raw: String): String {
+        val obj = JSONObject(raw)
+        return obj.getString("Sukses")
     }
 
 }
