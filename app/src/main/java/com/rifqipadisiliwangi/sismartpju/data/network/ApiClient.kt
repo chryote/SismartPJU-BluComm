@@ -1,39 +1,49 @@
 package com.rifqipadisiliwangi.sismartpju.data.network
 
+import android.util.Base64
+import androidx.datastore.preferences.protobuf.Api
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-//object  ApiClient {
-//
-//    private const val BASE_URL = "https://sisemarpju.smartlinks.id/"
-//    private val httpClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor())
-//
-//    private val retrofit: Retrofit = Retrofit.Builder()
-//        .baseUrl(BASE_URL)
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .client(httpClient.build())
-//        .build()
+class ApiClient {
+    private val retrofit: Retrofit
+    init {
+        val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(
+                Interceptor { chain ->
+                    val original = chain.request()
+                    val requestBuilder = original.newBuilder()
+                        .addHeader("Authorization", AUTH)
+                        .method(original.method, original.body)
+                    val request = requestBuilder.build()
+                    chain.proceed(request)
+                }
+            ).build()
+        retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
 
-//  val apiService: ApiService = retrofit.create(ApiService::class.java)
-//
-//    private val BASE_URL = "https://sisemarpju.smartlinks.id/"
-//    //add BasicAuthInterceptor to OkHttp client
-//    val client =  OkHttpClient.Builder()
-//        .addInterceptor(BasicAuthInterceptor("demo@demo.com",     "12345678"))
-//        .build()
-//    val gson = GsonBuilder()
-//        .setLenient()
-//        .create();
-//    // add OkHttp client to Retrofit instance
-//    private val api = Retrofit.Builder()
-//        .baseUrl(BASE_URL)
-//        .client(client)
-//        .addConverterFactory(GsonConverterFactory.create(gson))
-//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//        .build()
-//        .create(PosApi::class.java)
-//
-//    fun sendAmount(amount: Double, msisdn: String): Single<LoginResponseItem> {
-//        return api.sendAmount(amount, msisdn)
-//
-//
-//
-//}
+    val api: ApiService
+        get() = retrofit.create(ApiService::class.java)
+
+    companion object {
+        private val AUTH =
+            "Basic " + Base64.encodeToString("RGlzaHVidXNlcjIxMjp1c2VyRGlzaHViMjEy".toByteArray(), Base64.NO_WRAP)
+        private const val BASE_URL = "https://sisemarpju.smartlinks.id/"
+        private var mInstance: ApiClient? = null
+
+        @get:Synchronized
+        val instance: ApiClient?
+            get() {
+                if (mInstance == null) {
+                    mInstance = ApiClient()
+                }
+                return mInstance
+            }
+    }
+}

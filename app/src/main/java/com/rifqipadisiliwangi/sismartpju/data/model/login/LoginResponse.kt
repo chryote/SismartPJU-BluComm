@@ -1,12 +1,12 @@
 package com.rifqipadisiliwangi.sismartpju.data.model.login
 
-data class LoginSuccessResponse(
+data class LoginResponse(
+    val tipe: List<TipeList>,
     val Respon_code: String,
-    val Respon_desc: String,
-    val tipe: List<Tipe>
+    val Respon_desc: String
 )
 
-data class Tipe(
+data class TipeList(
     val statusonline: String,
     val statususer: String
 )

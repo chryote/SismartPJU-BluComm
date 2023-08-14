@@ -1,8 +1,10 @@
 package com.rifqipadisiliwangi.sismartpju.view.home
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import com.rifqipadisiliwangi.sismartpju.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityDashboardBinding
@@ -66,13 +68,19 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         return false
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // Handle the back press event
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack() // Pop the fragment from the back stack
-        } else {
-            super.onBackPressed() // Perform the default back button behavior
-        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Tutup Aplikasi")
+            .setMessage("Ingin Keluar Aplikasi?")
+            .setPositiveButton("Ya"){ _: DialogInterface, i: Int ->
+                finishAffinity()
+            }
+            .setNegativeButton("Tidak"){ dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            .show()
     }
 }
 

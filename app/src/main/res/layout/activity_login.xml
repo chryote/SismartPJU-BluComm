@@ -102,6 +102,7 @@
         android:fontFamily="@font/inter_medium"
         android:padding="@dimen/_12sdp"
         android:text="Masuk"
+        android:visibility="gone"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -117,7 +118,6 @@
         android:fontFamily="@font/inter_medium"
         android:padding="@dimen/_12sdp"
         android:text="Masuk"
-        android:visibility="gone"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
