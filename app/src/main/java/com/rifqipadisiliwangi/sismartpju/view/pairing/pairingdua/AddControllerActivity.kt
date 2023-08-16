@@ -15,6 +15,10 @@ class AddControllerActivity : AppCompatActivity() {
         binding = ActivityAddConrollerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.btnNext.setOnClickListener {
             startActivity(Intent(this, DashboardActivity::class.java))
             finish()

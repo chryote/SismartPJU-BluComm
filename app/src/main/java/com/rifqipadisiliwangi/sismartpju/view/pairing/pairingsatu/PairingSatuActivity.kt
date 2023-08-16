@@ -16,12 +16,12 @@ class PairingSatuActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ivBack.setOnClickListener {
-            startActivity(Intent(this, AddPairingActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         binding.btnNext.setOnClickListener {
             startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
         }
     }
 }

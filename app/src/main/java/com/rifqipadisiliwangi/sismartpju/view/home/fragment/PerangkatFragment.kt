@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rifqipadisiliwangi.sismartpju.databinding.FragmentPerangkatBinding
+import com.rifqipadisiliwangi.sismartpju.view.daftar.controller.DaftarControllerActivity
+import com.rifqipadisiliwangi.sismartpju.view.daftar.coordinator.DaftarCoordinatorActivity
 import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingdua.PairingDuaActivity
 import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu.AddPairingActivity
 import com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu.PairingSatuActivity
@@ -33,6 +35,14 @@ class PerangkatFragment : Fragment() {
 
         binding.llModeKontroller.setOnClickListener {
             startActivity(Intent(context, PairingDuaActivity::class.java))
+        }
+
+        binding.llDaftarKontroller.setOnClickListener {
+            startActivity(Intent(context, DaftarControllerActivity::class.java))
+        }
+
+        binding.llDaftarKoordinator.setOnClickListener {
+            startActivity(Intent(context, DaftarCoordinatorActivity::class.java))
         }
     }
 
