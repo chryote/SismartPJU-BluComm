@@ -276,13 +276,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private fun recyclerShown(){
         val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
         viewModel.getPju().observe(viewLifecycleOwner, Observer {
-//            viewModel.loading.observe(viewLifecycleOwner, Observer {
-//                when(it){
-//                    true -> binding.homeProgressBar.visibility = View.VISIBLE
-//                    false -> binding.homeProgressBar.visibility = View.GONE
-//                }
-//            })
-
             if (it != null){
                 binding.rvMonitoring.layoutManager = LinearLayoutManager(requireActivity())
                 pekerjaanAdapter = AdapterPekerjaanItem(it.tipe)
