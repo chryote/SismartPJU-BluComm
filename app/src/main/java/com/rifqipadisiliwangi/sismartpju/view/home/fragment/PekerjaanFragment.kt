@@ -26,14 +26,14 @@ class PekerjaanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerShown()
+//        recyclerShown()
 
     }
 
-    private fun recyclerShown(){
-        binding.rvPekerjaan.adapter = AdapterPekerjaanItem(PekerjaanSingleton.listPekerjaan)
-        binding.rvPekerjaan.layoutManager =  LinearLayoutManager(requireActivity())
-        binding.rvPekerjaan.isNestedScrollingEnabled = false
-    }
+//    private fun recyclerShown(){
+//        binding.rvPekerjaan.adapter = AdapterPekerjaanItem(PekerjaanSingleton.listPekerjaan)
+//        binding.rvPekerjaan.layoutManager =  LinearLayoutManager(requireActivity())
+//        binding.rvPekerjaan.isNestedScrollingEnabled = false
+//    }
 
 }

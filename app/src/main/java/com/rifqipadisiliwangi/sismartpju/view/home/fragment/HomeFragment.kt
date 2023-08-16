@@ -10,14 +10,19 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,14 +32,22 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.PekerjaanSingleton
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.ResponsePjuItem
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.TipePju
+import com.rifqipadisiliwangi.sismartpju.data.network.ApiClient
 import com.rifqipadisiliwangi.sismartpju.databinding.FragmentHomeBinding
 import com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan.AdapterPekerjaanItem
 import com.rifqipadisiliwangi.sismartpju.view.map.MapsActivity
-
+import com.rifqipadisiliwangi.sismartpju.viewmodel.ViewModelPekerjaanPju
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+private const val TAG = "HomeFragment"
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnMapClickListener  {
 
     private lateinit var binding : FragmentHomeBinding
+    private lateinit var pekerjaanAdapter: AdapterPekerjaanItem
 
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
@@ -56,6 +69,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerShown()
+
+
 
         binding.cvMaps.setOnClickListener {
             startActivity(Intent(context, MapsActivity::class.java))
@@ -259,9 +274,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     }
 
     private fun recyclerShown(){
-        binding.rvMonitoring.adapter = AdapterPekerjaanItem(PekerjaanSingleton.listPekerjaan)
-        binding.rvMonitoring.layoutManager =  LinearLayoutManager(requireActivity())
-        binding.rvMonitoring.isNestedScrollingEnabled = false
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
+        viewModel.getPju().observe(viewLifecycleOwner, Observer {
+//            viewModel.loading.observe(viewLifecycleOwner, Observer {
+//                when(it){
+//                    true -> binding.homeProgressBar.visibility = View.VISIBLE
+//                    false -> binding.homeProgressBar.visibility = View.GONE
+//                }
+//            })
+
+            if (it != null){
+                binding.rvMonitoring.layoutManager = LinearLayoutManager(requireActivity())
+                pekerjaanAdapter = AdapterPekerjaanItem(it.tipe)
+                binding.rvMonitoring.adapter = pekerjaanAdapter
+            }else {
+                Toast.makeText(requireActivity(),"Data Tidak Tampil", Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel.callApiPju()
     }
 
 }

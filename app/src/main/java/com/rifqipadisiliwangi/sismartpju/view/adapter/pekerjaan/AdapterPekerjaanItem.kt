@@ -1,45 +1,33 @@
 package com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan
 
-import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.Pekerjaan
+import com.rifqipadisiliwangi.sismartpju.R
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.TipePju
 import com.rifqipadisiliwangi.sismartpju.databinding.ItemPekerjaanBinding
-import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 
-class AdapterPekerjaanItem(private var pekerjaan : ArrayList<Pekerjaan>): RecyclerView.Adapter<AdapterPekerjaanItem.ListViewHolder>() {
+class AdapterPekerjaanItem(var listPju : List<TipePju>) : RecyclerView.Adapter<AdapterPekerjaanItem.ViewHolder>(){
 
-    class ListViewHolder(val binding : ItemPekerjaanBinding): RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(var binding: ItemPekerjaanBinding):RecyclerView.ViewHolder(binding.root) {
+        val view = binding
 
     }
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ListViewHolder {
-        var view = ItemPekerjaanBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterPekerjaanItem.ViewHolder {
+        val view = ItemPekerjaanBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.binding.tvIdPekerjaan.text = pekerjaan[position].idPju
-        holder.binding.tvAddress.text = pekerjaan[position].address
-        holder.binding.tvIdPju.text = pekerjaan[position].idPju
-//        holder.binding.tvAlert.text = pekerjaan[position].alert
-//        holder.binding.tvStatus.text = pekerjaan[position].status
+    override fun onBindViewHolder(holder: AdapterPekerjaanItem.ViewHolder, position: Int) {
+//        Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/w185"+listMovie[position].posterPath).into(holder.binding.imgPoster)
+        holder.binding.tvIdPekerjaan.text = listPju[position].idpju
+        holder.binding.tvAddress.text = listPju[position].alamat
 
-        holder.binding.btnDetail.setOnClickListener {
-            val context = it.context
-            context.startActivity(Intent(it.context, DetailPekerjaanActivity::class.java))
-        }
     }
-
-    fun setDataPekerjaan(PekerjaanList : ArrayList<Pekerjaan>){
-        this.pekerjaan = PekerjaanList
-    }
-
 
     override fun getItemCount(): Int {
-        return pekerjaan.size
+        return listPju.size
     }
 }

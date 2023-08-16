@@ -3,10 +3,10 @@ package com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror
 data class ResponsePjuItem(
     val Respon_code: String,
     val Respon_desc: String,
-    val tipe: List<Tipe>
+    val tipe: List<TipePju>
 )
 
-data class Tipe(
+data class TipePju(
     val alamat: String,
     val idkoordinator: String,
     val idne: String,
