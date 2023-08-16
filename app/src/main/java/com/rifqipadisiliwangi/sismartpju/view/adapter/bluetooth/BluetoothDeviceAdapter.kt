@@ -51,9 +51,9 @@ class BluetoothDeviceAdapter(private val bluetoothDevices: ArrayList<BluetoothDe
 
         holder.binding.deviceName.setText(bluetoothDevice.name)
         holder.binding.deviceMacadress.setText(bluetoothDevice.address)
-        val drawable: Int =
-            BluetoothDeviceMap().getDrawable(bluetoothDevice.bluetoothClass.deviceClass)
-        holder.binding.deviceIcon.setImageResource(drawable)
+//        val drawable: Int =
+//            BluetoothDeviceMap().getDrawable(bluetoothDevice.bluetoothClass.deviceClass)
+//        holder.binding.deviceIcon.setImageResource(drawable)
         Log.d("hugo", "name: ${bluetoothDevice.name} adres: ${bluetoothDevice.address}")
     }
 

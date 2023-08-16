@@ -7,8 +7,6 @@
     android:background="@color/bg_color"
     tools:context=".view.pairing.pairingsatu.PairingSatuActivity">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"

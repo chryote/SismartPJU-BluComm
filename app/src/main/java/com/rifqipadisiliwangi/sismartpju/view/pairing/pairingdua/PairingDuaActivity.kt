@@ -16,8 +16,7 @@ class PairingDuaActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ivBack.setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         binding.btnNext.setOnClickListener {

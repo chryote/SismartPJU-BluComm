@@ -97,7 +97,7 @@
 
             <Button
                 android:id="@+id/bluetoothEnables"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
                 style="@style/optionbutton"
                 android:contentDescription="RefreshButton"
