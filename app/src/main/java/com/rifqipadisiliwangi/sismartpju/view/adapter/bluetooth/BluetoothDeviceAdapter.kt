@@ -5,15 +5,9 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
-import com.rifqipadisiliwangi.sismartpju.R
-import com.rifqipadisiliwangi.sismartpju.data.utils.BluetoothDeviceMap
 import com.rifqipadisiliwangi.sismartpju.databinding.ItemBluetoothBinding
-import com.rifqipadisiliwangi.sismartpju.databinding.ItemPekerjaanBinding
 
 
 class BluetoothDeviceAdapter(private val bluetoothDevices: ArrayList<BluetoothDevice>, private val context: Context) : RecyclerView.Adapter<BluetoothDeviceAdapter.ViewHolder>() {
@@ -40,20 +34,9 @@ class BluetoothDeviceAdapter(private val bluetoothDevices: ArrayList<BluetoothDe
         position: Int
     ) {
         val bluetoothDevice = bluetoothDevices[position]
-//        if (ActivityCompat.checkSelfPermission(
-//                context,
-//                Manifest.permission.BLUETOOTH_CONNECT
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//
-//            return
-//        }
 
         holder.binding.deviceName.setText(bluetoothDevice.name)
         holder.binding.deviceMacadress.setText(bluetoothDevice.address)
-//        val drawable: Int =
-//            BluetoothDeviceMap().getDrawable(bluetoothDevice.bluetoothClass.deviceClass)
-//        holder.binding.deviceIcon.setImageResource(drawable)
         Log.d("hugo", "name: ${bluetoothDevice.name} adres: ${bluetoothDevice.address}")
     }
 
