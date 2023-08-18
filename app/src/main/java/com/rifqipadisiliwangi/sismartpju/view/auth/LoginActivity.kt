@@ -109,8 +109,11 @@ class LoginActivity : AppCompatActivity() {
                 override fun onFailure(call: Call, e: IOException) {
                     val loginResponse = e.toString()
                     loginResponse.let {
-                        Toast.makeText(this@LoginActivity,
-                            "Login failed", Toast.LENGTH_SHORT).show()
+                        runOnUiThread {
+                            Toast.makeText(this@LoginActivity,
+                                "Login failed", Toast.LENGTH_SHORT).show()
+                            Log.d(TAG, e.toString())
+                        }
                     }
                 }
                 @SuppressLint("SetTextI18n")

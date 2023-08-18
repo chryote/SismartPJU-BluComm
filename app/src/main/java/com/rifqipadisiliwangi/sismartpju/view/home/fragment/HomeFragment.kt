@@ -48,14 +48,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     private lateinit var binding : FragmentHomeBinding
     private lateinit var pekerjaanAdapter: AdapterPekerjaanItem
+    private lateinit var listPju : List<TipePju>
 
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
     private var marker: Marker? = null
-    private lateinit var sharedPreferences: SharedPreferences
-
-    private var latitude: String? = null
-    private var longitude: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,71 +82,48 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         ) as LocationManager
 
     }
+    private fun recyclerShown(){
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
+        viewModel.getPju().observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                listPju = it.tipe
+                binding.rvMonitoring.layoutManager = LinearLayoutManager(requireActivity())
+                pekerjaanAdapter = AdapterPekerjaanItem(requireActivity(),listPju, googleMap)
+                binding.rvMonitoring.adapter = pekerjaanAdapter
+            }else {
+                Toast.makeText(requireActivity(),"Data Tidak Tampil", Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel.callApiPju()
+    }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
 
-        // Set marker click listener
-        googleMap.setOnMarkerClickListener(this)
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
+        viewModel.getPju().observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                pekerjaanAdapter = AdapterPekerjaanItem(requireActivity(),listPju, googleMap)
+                for (irrigationItem in listPju) {
+                    val latitude = irrigationItem.latitude.toDoubleOrNull()
+                    val longitude = irrigationItem.longitude.toDoubleOrNull()
 
-        // Set map click listener
-        googleMap.setOnMapClickListener(this)
-
-        // Check for location permission
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            // Check if GPS is enabled
-            if (isGPSEnabled()) {
-                googleMap.isMyLocationEnabled = true
-
-                // Check if latitude and longitude are available
-                if (latitude != null && longitude != null) {
-                    // Create LatLng object with the received latitude and longitude
-                    val location = latitude!!.toDoubleOrNull()?.let { longitude!!.toDoubleOrNull()
-                        ?.let { it1 -> LatLng(it, it1) } }
-
-                    // Add a marker at the received location
-                    marker = location?.let { MarkerOptions().position(it).title("My Location") }
-                        ?.let { googleMap.addMarker(it) }
-
-                    // Move the camera to the received location
-                    location?.let { CameraUpdateFactory.newLatLngZoom(it, 12f) }
-                        ?.let { googleMap.moveCamera(it) }
-                } else {
-                    // Latitude and longitude not available, handle the default behavior
-                    // ...
-
-                    // For example, move the camera
-                    // Get the user's current location
-                    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-                    fusedLocationProviderClient.lastLocation
-                        .addOnSuccessListener { location: Location? ->
-                            if (location != null) {
-                                // If location is available, move the camera to the current location
-                                val currentLocation = LatLng(location.latitude, location.longitude)
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f))
-                            } else {
-                                // If location is not available, move the camera to Indonesia
-                                val indonesiaLocation = LatLng(-0.7893, 113.9213)
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indonesiaLocation, 5f))
-                            }
-                        }
+                    if (latitude != null && longitude != null) {
+                        val latLng = LatLng(latitude, longitude)
+                        googleMap.addMarker(MarkerOptions().position(latLng).title(irrigationItem.kondisi))
+                    }
                 }
-            } else {
-                // If GPS is not enabled, move the camera to Indonesia
-                val indonesiaLocation = LatLng(-0.7893, 113.9213)
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indonesiaLocation, 5f))
-                showGPSDisabledDialog()
+                if (listPju.isNotEmpty()) {
+                    val pjuReport = listPju.first()
+                    val firstLatLng = LatLng(pjuReport.latitude?.toDoubleOrNull() ?: 0.0,
+                        pjuReport.longitude?.toDoubleOrNull() ?: 0.0)
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 12f))
+                }
+            }else {
+                Toast.makeText(requireActivity(),"Data Tidak Tampil", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            // Request location permission
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
-        }
+        })
+        viewModel.callApiPju()
     }
 
     override fun onRequestPermissionsResult(
@@ -271,20 +245,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     companion object {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1
-    }
-
-    private fun recyclerShown(){
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
-        viewModel.getPju().observe(viewLifecycleOwner, Observer {
-            if (it != null){
-                binding.rvMonitoring.layoutManager = LinearLayoutManager(requireActivity())
-                pekerjaanAdapter = AdapterPekerjaanItem(requireActivity(),it.tipe)
-                binding.rvMonitoring.adapter = pekerjaanAdapter
-            }else {
-                Toast.makeText(requireActivity(),"Data Tidak Tampil", Toast.LENGTH_SHORT).show()
-            }
-        })
-        viewModel.callApiPju()
     }
 
 }

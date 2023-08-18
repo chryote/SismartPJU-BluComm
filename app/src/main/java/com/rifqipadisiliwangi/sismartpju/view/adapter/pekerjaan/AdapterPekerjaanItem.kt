@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.GoogleMap
 import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.TipePju
 import com.rifqipadisiliwangi.sismartpju.databinding.ItemPekerjaanBinding
@@ -18,7 +19,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class AdapterPekerjaanItem(private val context: Context, var listPju : List<TipePju>) : RecyclerView.Adapter<AdapterPekerjaanItem.ViewHolder>(){
+class AdapterPekerjaanItem(
+    private val context: Context,
+    var listPju : List<TipePju>,
+    private val googleMap: GoogleMap
+) : RecyclerView.Adapter<AdapterPekerjaanItem.ViewHolder>(){
 
     class ViewHolder(var binding: ItemPekerjaanBinding):RecyclerView.ViewHolder(binding.root) {
         val view = binding
