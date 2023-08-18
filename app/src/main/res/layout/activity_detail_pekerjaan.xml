@@ -75,10 +75,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.google.android.gms.maps.MapView
-                        android:id="@+id/mapView"
+<!--                    <com.google.android.gms.maps.MapView-->
+<!--                        android:id="@+id/mapView"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent" />-->
+
+                    <fragment
+                        android:id="@+id/mapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,7 +109,7 @@
                 android:text="pk42394"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
                 app:layout_constraintTop_toTopOf="@+id/iv_spesifikasi"
                 tools:ignore="RtlCompat" />
@@ -133,7 +139,7 @@
                 android:text="PJU GEJ123"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toEndOf="@+id/iv_spesifikasi"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_id"
                 tools:ignore="RtlCompat" />

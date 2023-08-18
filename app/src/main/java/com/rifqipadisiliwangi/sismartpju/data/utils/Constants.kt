@@ -1,8 +1,10 @@
 package com.rifqipadisiliwangi.sismartpju.data.utils
 
 object Constants {
+
     // Endpoints
-    const val BASE_URL = "https://sisemarpju.smartlinks.id/dd163577ea063b814f85b490a748d583?adminuser=kedaireka&passwuser=kedaireka212"
-    const val LOGIN_URL = "auth/login"
+    const val BASE_URL = "https://sisemarpju.smartlinks.id/"
+    const val PJU_ERROR = "462bac86fe8f8d315f73006bda73a088?"
     const val POSTS_URL = "posts"
+
 }

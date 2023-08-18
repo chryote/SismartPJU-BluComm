@@ -278,7 +278,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         viewModel.getPju().observe(viewLifecycleOwner, Observer {
             if (it != null){
                 binding.rvMonitoring.layoutManager = LinearLayoutManager(requireActivity())
-                pekerjaanAdapter = AdapterPekerjaanItem(it.tipe)
+                pekerjaanAdapter = AdapterPekerjaanItem(requireActivity(),it.tipe)
                 binding.rvMonitoring.adapter = pekerjaanAdapter
             }else {
                 Toast.makeText(requireActivity(),"Data Tidak Tampil", Toast.LENGTH_SHORT).show()

@@ -1,31 +1,31 @@
 package com.rifqipadisiliwangi.sismartpju.data.network
 
+import com.rifqipadisiliwangi.sismartpju.data.utils.Constants
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-//    private const val BASE_URL = "https://sisemarpju.smartlinks.id/" // Ganti dengan URL API yang sesuai
-//
-//    private val retrofit: Retrofit by lazy {
-//        Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//
-//    val apiService: ApiService by lazy {
-//        retrofit.create(ApiService::class.java)
-//    }
 
+    private const val BASE_URL = Constants.BASE_URL
 
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
-    const val BASE_URL = "https://sisemarpju.smartlinks.id/"
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .authenticator(BasicAuthenticator("username", "password"))
+        .build()
 
     val instance : ApiService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         retrofit.create(ApiService::class.java)
     }
+
 }

@@ -14,12 +14,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
-import com.google.gson.Gson
+import androidx.lifecycle.MutableLiveData
 import com.rifqipadisiliwangi.sismartpju.R
-import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginResponse
-import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginSuccessResponse
+import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginRequestIem
+import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginResponseItem
+import com.rifqipadisiliwangi.sismartpju.data.network.ApiClient
+import com.rifqipadisiliwangi.sismartpju.data.network.ApiService
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityLoginBinding
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -27,10 +32,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import org.json.JSONObject
 import java.io.IOException
 
-private val TAG = "LoginActivity"
+private const val TAG = "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
@@ -47,9 +51,9 @@ class LoginActivity : AppCompatActivity() {
             togglePasswordVisibility()
         }
 
-
         binding.btnLogin.setOnClickListener {
             doLogin()
+//            loginRequest()
         }
         binding.etPassword.addTextChangedListener(object  : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -145,6 +149,28 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
+
+    private fun loginRequest(){
+
+        GlobalScope.launch(Dispatchers.Main) {
+
+            val mediaType = "text/plain".toMediaType()
+            val username = (binding.etUsername.text.toString().trimIndent()).toRequestBody(mediaType)
+            val password = (binding.etPassword.text.toString().trimIndent()).toRequestBody(mediaType)
+
+
+            val response = ApiClient.instance.login(LoginRequestIem(username.toString(), password.toString()))
+            if (response.isSuccessful) {
+                // Login berhasil
+                val responseBody: LoginResponseItem? = response.body()
+                Log.d(TAG, "Response: $responseBody")
+            } else {
+                // Login gagal
+                Log.d(TAG, "Response: ${response.errorBody()}")
+            }
+        }
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
 
