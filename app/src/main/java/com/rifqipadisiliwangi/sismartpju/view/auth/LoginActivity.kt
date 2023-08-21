@@ -91,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
         // Move the cursor to the end of the password field to maintain cursor position
         binding.etPassword.setSelection(binding.etPassword.text.length)
     }
-
     private fun doLogin(){
         binding.btnLogin.setOnClickListener {
             val mediaType = "text/plain".toMediaType()

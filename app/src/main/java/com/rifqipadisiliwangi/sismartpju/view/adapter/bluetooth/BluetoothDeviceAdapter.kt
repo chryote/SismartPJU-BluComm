@@ -6,12 +6,11 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.rifqipadisiliwangi.sismartpju.databinding.ItemBluetoothBinding
-
-
 class BluetoothDeviceAdapter(private val bluetoothDevices: ArrayList<BluetoothDevice>, private val context: Context) : RecyclerView.Adapter<BluetoothDeviceAdapter.ViewHolder>() {
-
+    
     class ViewHolder(val binding : ItemBluetoothBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -34,9 +33,11 @@ class BluetoothDeviceAdapter(private val bluetoothDevices: ArrayList<BluetoothDe
         position: Int
     ) {
         val bluetoothDevice = bluetoothDevices[position]
-
         holder.binding.deviceName.setText(bluetoothDevice.name)
         holder.binding.deviceMacadress.setText(bluetoothDevice.address)
+        holder.binding.constBluetooth.setOnClickListener {
+            Toast.makeText(context,"name: ${bluetoothDevice.name} adres: ${bluetoothDevice.address}", Toast.LENGTH_SHORT ).show()
+        }
         Log.d("hugo", "name: ${bluetoothDevice.name} adres: ${bluetoothDevice.address}")
     }
 
