@@ -39,6 +39,7 @@ class AdapterPekerjaanItem(
         holder.binding.tvIdPekerjaan.text = listPju[position].idpelanggan
         holder.binding.tvIdPju.text = listPju[position].idpju
         holder.binding.tvDate.text =  listPju[position].tgl
+//        holder.binding.tvTitleKerusakan.text =  listPju[position].kondisi
 
         val response = listPju[position].alamat
         val regex = Regex("^Jl\\. ([\\w\\s]+) No\\.(\\d+), ([\\w\\s]+), Kec\\. ([\\w\\s]+), Kabupaten ([\\w\\s]+), Jawa Tengah (\\d{5})$")
@@ -63,9 +64,10 @@ class AdapterPekerjaanItem(
             intent.putExtra("idpekerjaan", listPju[position].idpelanggan)
             intent.putExtra("idpju", listPju[position].idpju)
             intent.putExtra("tgl", listPju[position].tgl)
+            intent.putExtra("alamat", holder.binding.tvAddress.text.toString())
+            intent.putExtra("kondisi", "Kondisi : ${listPju[position].kondisi}")
             intent.putExtra("lat", listPju[position].latitude)
             intent.putExtra("lot", listPju[position].longitude)
-            intent.putExtra("alamat", holder.binding.tvAddress.text.toString())
             context.startActivity(intent)
         }
 

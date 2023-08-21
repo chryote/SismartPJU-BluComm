@@ -27,10 +27,17 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTambahPekerjaanBinding
 
-    var jkList = arrayOf("primer","sekunder", "tersier")
-    var tkList = arrayOf("ringan","sedang", "rusak berat")
+    var tkList = arrayOf("Selesai","Belum Selesai")
+    var jkList = arrayOf("Perbaikan kabel jaringan kongslet","Perbaikan lampu mati", "Perbaikan installasi box", "Perbaikan MCB Tiang")
 
     private var imageView: ImageView? = null
+    private var title: String = ""
+    private var titlePju = ""
+    private var titleDate = ""
+    private var titleAdrress = ""
+    private var kondisi = ""
+    private var lat = ""
+    private var lot = ""
 
     private val RESULT_LOAD_IMAGE = 123
     private val REQUEST_CODE_GALLERY = 999
@@ -46,14 +53,14 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         requestCamera()
         loadSpinerJenis()
         loadSpinerHasil()
+        getBundle()
 
         binding.btnSpesifikasi.setOnClickListener {
-            startActivity(Intent(this, SpesifikasiActivity::class.java))
+            toSpesifikasi()
         }
 
         binding.ivBack.setOnClickListener {
             onBackPressed()
-            finishAndRemoveTask()
         }
 
         binding.btnAdd.setOnClickListener {
@@ -161,8 +168,30 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         tkItem = ArrayAdapter(this, R.layout.spinner_right_aligned, tkList)
         tkItem.setDropDownViewResource(R.layout.spinner_right_aligned)
     }
+    private fun getBundle(){
+        title = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
+        titlePju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
+        titleDate = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
+        titleAdrress = intent.extras?.getString("alamat") ?: "Tidak Terdeteksi"
+        kondisi = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
+        lat = intent.extras?.getString("lat") ?: "Tidak Terdeteksi"
+        lot = intent.extras?.getString("lot") ?: "Tidak Terdeteksi"
+    }
+
+    private fun toSpesifikasi(){
+        val intent = Intent(this, SpesifikasiActivity::class.java)
+        intent.putExtra("idpekerjaan",title)
+        intent.putExtra("idpju",titlePju)
+        intent.putExtra("tgl", titleDate)
+        intent.putExtra("alamat",titleAdrress)
+        intent.putExtra("kondisi",kondisi)
+        intent.putExtra("lat", lat)
+        intent.putExtra("lot",lot)
+        this.startActivity(intent)
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
+        finishAndRemoveTask()
     }
 }

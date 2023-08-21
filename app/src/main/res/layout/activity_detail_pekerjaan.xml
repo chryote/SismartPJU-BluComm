@@ -95,7 +95,7 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_42sdp"
                 android:layout_marginVertical="@dimen/_20sdp"
-                android:background="@drawable/ic_akun"
+                android:background="@drawable/ic_street_light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_maps" />
 
@@ -160,6 +160,21 @@
                 tools:ignore="DuplicateIds,RtlCompat" />
 
             <TextView
+                android:id="@+id/tv_kondisi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center_vertical"
+                android:text="Krodit"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_address"
+                tools:ignore="DuplicateIds,RtlCompat" />
+
+            <TextView
                 android:id="@+id/tv_keterangan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,7 +186,7 @@
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_address"
+                app:layout_constraintTop_toBottomOf="@+id/tv_kondisi"
                 tools:ignore="RtlCompat" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -226,6 +241,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                 </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

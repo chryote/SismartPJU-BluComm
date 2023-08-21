@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="@dimen/_14sdp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Upload Gambar Sebelum :"
+                        android:text="Upload Gambar Sesudah :"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="@id/const_field_add"
                         app:layout_constraintTop_toBottomOf="@+id/cv_sebelum" />

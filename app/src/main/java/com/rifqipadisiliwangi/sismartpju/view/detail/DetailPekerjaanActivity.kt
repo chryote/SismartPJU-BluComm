@@ -32,10 +32,19 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
         mapFragment.getMapAsync(this)
 
         binding.btnAdd.setOnClickListener {
-            startActivity(Intent(this, TambahPekerjaanActivity::class.java))
+            toSpesifikasi()
         }
         binding.ivBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.tvTitleId.setOnClickListener {
+            Toast.makeText(this@DetailPekerjaanActivity, "ID Pekerjaan : ${binding.tvTitleId.text}", Toast.LENGTH_SHORT).show()
+        }
+
+
+        binding.tvTitlePju.setOnClickListener {
+            Toast.makeText(this@DetailPekerjaanActivity, "ID PJU : ${binding.tvTitleId.text}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -44,8 +53,20 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
         binding.tvTitlePju.text = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
         binding.tvTitleDate.text = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
         binding.tvTitleAddress.text = intent.extras?.getString("alamat") ?: "Tidak Terdeteksi"
+        binding.tvKondisi.text = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
         lat = intent.extras?.getString("lat") ?: "Tidak Terdeteksi"
         lot = intent.extras?.getString("lot") ?: "Tidak Terdeteksi"
+    }
+    private fun toSpesifikasi(){
+        val intent = Intent(this, TambahPekerjaanActivity::class.java)
+        intent.putExtra("idpekerjaan",binding.tvTitleId.text.toString())
+        intent.putExtra("idpju",binding.tvTitleId.text.toString())
+        intent.putExtra("tgl", binding.tvTitleDate.text.toString())
+        intent.putExtra("alamat", binding.tvTitleAddress.text.toString())
+        intent.putExtra("kondisi", binding.tvKondisi.text.toString())
+        intent.putExtra("lat", lat)
+        intent.putExtra("lot",lot)
+        this.startActivity(intent)
     }
 
     override fun onMapReady(map: GoogleMap) {

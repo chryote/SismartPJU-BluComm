@@ -49,7 +49,6 @@ class AkunFragment : Fragment() {
         val editor = sharedPrefs.edit()
         editor.clear()
         editor.apply()
-
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
         requireActivity().finish()

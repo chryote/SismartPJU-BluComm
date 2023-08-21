@@ -57,11 +57,8 @@ class LoginActivity : AppCompatActivity() {
             // Handle login button click
             binding.btnLogin.setOnClickListener {
                 doLogin()
-                val username = binding.etUsername.text.toString()
-                val password = binding.etPassword.text.toString()
-
                 // Perform login validation
-                if (username.isNotEmpty() && password.isNotEmpty()) {
+                if (binding.etUsername.text.toString().isNotEmpty() && binding.etPassword.text.toString().isNotEmpty()) {
                     // Save logged in status to SharedPreferences
                     val editor = sharedPrefs.edit()
                     editor.putBoolean("isLoggedIn", true)

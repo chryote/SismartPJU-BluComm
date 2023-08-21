@@ -67,8 +67,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         super.onViewCreated(view, savedInstanceState)
         recyclerShown()
 
-
-
         binding.cvMaps.setOnClickListener {
             startActivity(Intent(context, MapsActivity::class.java))
         }
@@ -107,10 +105,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 for (irrigationItem in listPju) {
                     val latitude = irrigationItem.latitude.toDoubleOrNull()
                     val longitude = irrigationItem.longitude.toDoubleOrNull()
-
                     if (latitude != null && longitude != null) {
                         val latLng = LatLng(latitude, longitude)
-                        googleMap.addMarker(MarkerOptions().position(latLng).title(irrigationItem.kondisi))
+                        googleMap.addMarker(MarkerOptions().position(latLng).title(irrigationItem.idpju))
                     }
                 }
                 if (listPju.isNotEmpty()) {
@@ -240,6 +237,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 ContextCompat.getColor(requireActivity(), android.R.color.black))
         }
         alert.show()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        locationManager = requireActivity().getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
     }
 
 
