@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_170sdp"
+        android:layout_height="@dimen/_180sdp"
         app:cardCornerRadius="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,41 +23,43 @@
             <ImageView
                 android:id="@+id/deviceIcon"
                 android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_100sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/perangkat_tiga"/>
 
             <LinearLayout
-                android:layout_toEndOf="@id/deviceIcon"
-                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/deviceIcon"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/deviceIcon"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/deviceIcon">
 
                 <TextView
                     android:id="@+id/deviceName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Device name"
-                    android:fontFamily="@font/inter_medium"
-                    android:textColor="@color/grey_font"
                     style="@style/TextAppearance.Material3.BodyLarge"
-                    />
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:maxLines="2"
+                    android:text="Device name"
+                    android:textColor="@color/grey_font"
+                    android:textSize="@dimen/_16ssp" />
 
                 <TextView
                     android:id="@+id/deviceMacadress"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="macadress"
                     android:fontFamily="@font/inter_medium"
+                    android:maxLines="2"
+                    android:text="macadress"
                     android:textColor="@color/grey_font"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    />
+                    android:textSize="@dimen/_14ssp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
