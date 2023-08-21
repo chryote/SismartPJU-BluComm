@@ -17,8 +17,7 @@ class SpesifikasiActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnPekerjaan.setOnClickListener {
-            startActivity(Intent(this, TambahPekerjaanActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         binding.ivBack.setOnClickListener {

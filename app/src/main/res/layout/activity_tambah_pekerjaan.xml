@@ -72,7 +72,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/const_field_add"
                     android:layout_width="match_parent"
-                    android:layout_height="650dp"
+                    android:layout_height="700dp"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_28sdp">
 
@@ -140,20 +140,21 @@
                             android:background="@drawable/rounded_white_grey">
 
                             <ImageView
-                                android:id="@+id/img_upload_irrigation"
+                                android:id="@+id/img_upload_pekerjaan"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:translationZ="90dp"
                                 android:visibility="gone"
+                                android:src="@color/smsp_floating_label_color"
                                 app:layout_constraintBottom_toBottomOf="@+id/cv_img_consultation"
                                 app:layout_constraintEnd_toEndOf="@+id/cv_img_consultation"
                                 app:layout_constraintStart_toStartOf="@+id/cv_img_consultation"
                                 app:layout_constraintTop_toTopOf="@+id/cv_img_consultation" />
 
                             <LinearLayout
-                                android:id="@+id/ll_upload_irrigation"
+                                android:id="@+id/ll_upload_pekerjaan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_25sdp"
@@ -197,17 +198,17 @@
                                 android:visibility="visible"
                                 app:layout_constraintEnd_toEndOf="@id/cv_img_consultation"
                                 app:layout_constraintStart_toStartOf="@+id/cv_img_consultation"
-                                app:layout_constraintTop_toBottomOf="@+id/ll_upload_irrigation"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_upload_pekerjaan"
                                 tools:ignore="MissingConstraints" />
 
                             <ImageView
                                 android:id="@+id/iv_trash_img"
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_14sdp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_35sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:src="@drawable/ic_trash"
                                 android:translationZ="@dimen/_90sdp"
-                                android:visibility="visible"
+                                android:visibility="invisible"
                                 app:layout_constraintEnd_toEndOf="@id/cv_img_consultation"
                                 app:layout_constraintTop_toBottomOf="@+id/guideline1" />
 
@@ -216,7 +217,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                app:layout_constraintGuide_begin="13dp" />
+                                app:layout_constraintGuide_begin="1dp" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -250,12 +251,13 @@
                             android:background="@drawable/rounded_white_grey">
 
                             <ImageView
-                                android:id="@+id/img_upload_sesudah"
+                                android:id="@+id/img_upload_pekerjaan_sesudah"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:translationZ="90dp"
+                                android:src="@color/grey_font"
                                 android:visibility="gone"
                                 app:layout_constraintBottom_toBottomOf="@+id/cv_img_sesudah"
                                 app:layout_constraintEnd_toEndOf="@+id/cv_img_sesudah"
@@ -312,12 +314,12 @@
 
                             <ImageView
                                 android:id="@+id/iv_trash_img_sesudah"
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_14sdp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_35sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:src="@drawable/ic_trash"
                                 android:translationZ="@dimen/_90sdp"
-                                android:visibility="visible"
+                                android:visibility="invisible"
                                 app:layout_constraintEnd_toEndOf="@id/cv_img_sesudah"
                                 app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
@@ -326,7 +328,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                app:layout_constraintGuide_begin="13dp" />
+                                app:layout_constraintGuide_begin="1dp" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -344,7 +346,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/cv_sesudah" />
 
                     <RelativeLayout
-                        android:id="@+id/rv_tindakan"
+                        android:id="@+id/rv_hasil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -353,13 +355,14 @@
                         app:layout_constraintStart_toStartOf="@+id/const_field_add"
                         app:layout_constraintTop_toBottomOf="@+id/tv_tittle_tindakan">
 
-                        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                            android:id="@+id/sp_tindakan"
+                        <Spinner
+                            android:id="@+id/sp_hasil"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_50sdp"
                             app:smsp_arrowSize="0dp"
                             app:smsp_floatingLabelColor="@color/white"
                             app:smsp_hint="Hasil Perbaikan"
+                            android:background="@android:color/transparent"
                             app:smsp_isSearchable="false"
                             app:smsp_itemColor="@color/black"
                             app:smsp_itemListColor="@color/black"
@@ -371,8 +374,8 @@
                             tools:ignore="DuplicateIds" />
 
                         <ImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_arrow_down" />
@@ -389,10 +392,10 @@
                         android:text="Jenis Perbaikan :"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="@id/const_field_add"
-                        app:layout_constraintTop_toBottomOf="@+id/rv_tindakan" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_hasil" />
 
                     <RelativeLayout
-                        android:id="@+id/rv_Kerusakan"
+                        android:id="@+id/rv_jenis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_white_grey"
@@ -400,11 +403,12 @@
                         app:layout_constraintStart_toStartOf="@+id/const_field_add"
                         app:layout_constraintTop_toBottomOf="@+id/tv_tittle_Kerusakan">
 
-                        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                            android:id="@+id/sp_Kerusakan"
+                        <Spinner
+                            android:id="@+id/sp_jenis"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_50sdp"
                             app:smsp_arrowSize="0dp"
+                            android:background="@android:color/transparent"
                             app:smsp_floatingLabelColor="@color/white"
                             app:smsp_hint="Jenis Perbaikan"
                             app:smsp_isSearchable="false"
@@ -418,8 +422,8 @@
                             tools:ignore="DuplicateIds" />
 
                         <ImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_arrow_down" />
@@ -436,7 +440,7 @@
                         android:text="Keterangan Lainnya :"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="@id/const_field_add"
-                        app:layout_constraintTop_toBottomOf="@+id/rv_Kerusakan" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_jenis" />
 
                     <EditText
                         android:id="@+id/et_note"
