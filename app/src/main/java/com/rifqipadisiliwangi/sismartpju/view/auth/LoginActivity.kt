@@ -1,8 +1,10 @@
 package com.rifqipadisiliwangi.sismartpju.view.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -38,6 +40,7 @@ private const val TAG = "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+    private lateinit var sharedPrefs: SharedPreferences
 
     private var isPasswordVisible = false
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,34 +49,55 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.showPassBtn.setOnClickListener {
-            isPasswordVisible = !isPasswordVisible
-            togglePasswordVisibility()
-        }
+        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            startActivity(Intent(this, DashboardActivity::class.java))
+        } else {
+            // Handle login button click
+            binding.btnLogin.setOnClickListener {
+                doLogin()
+                val username = binding.etUsername.text.toString()
+                val password = binding.etPassword.text.toString()
 
-        binding.btnLogin.setOnClickListener {
-            doLogin()
-//            loginRequest()
-        }
-        binding.etPassword.addTextChangedListener(object  : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etPassword.text.toString().length <= 6 ){
-                    binding.btnLogin.isGone = true
-                    binding.btnLoginInvisible.isGone = false
-                } else{
-                    binding.btnLogin.isGone = false
-                    binding.btnLoginInvisible.isGone = true
+                // Perform login validation
+                if (username.isNotEmpty() && password.isNotEmpty()) {
+                    // Save logged in status to SharedPreferences
+                    val editor = sharedPrefs.edit()
+                    editor.putBoolean("isLoggedIn", true)
+                    editor.apply()
+                    startActivity(Intent(this, DashboardActivity::class.java))
+                } else {
+                    Toast.makeText(this, "Please enter valid credentials", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            binding.showPassBtn.setOnClickListener {
+                isPasswordVisible = !isPasswordVisible
+                togglePasswordVisibility()
             }
 
-            override fun afterTextChanged(p0: Editable?) {
+            binding.etPassword.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (binding.etPassword.text.toString().length <= 6) {
+                        binding.btnLogin.isGone = true
+                        binding.btnLoginInvisible.isGone = false
+                    } else {
+                        binding.btnLogin.isGone = false
+                        binding.btnLoginInvisible.isGone = true
+                    }
+                }
 
-            }
-        })
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
 
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
+
+        }
     }
 
     private fun togglePasswordVisibility() {
