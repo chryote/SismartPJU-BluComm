@@ -40,7 +40,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private lateinit var binding : FragmentHomeBinding
     private lateinit var pekerjaanAdapter: AdapterPekerjaanItem
     private lateinit var listPju : List<TipePju>
-
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
     private var marker: Marker? = null
@@ -108,7 +107,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-
         val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
         viewModel.getPju().observe(viewLifecycleOwner, Observer {
             if (it != null){
@@ -169,6 +167,31 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         }
     }
 
+    private fun showGPSDisabledDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        dialogBuilder.setMessage("GPS is disabled. Enable GPS in the device settings to use this feature.")
+            .setCancelable(false)
+            .setPositiveButton("Settings") { dialog: DialogInterface, _: Int ->
+                dialog.dismiss()
+                val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(settingsIntent)
+            }
+            .setNegativeButton("Cancel") { dialog: DialogInterface, _: Int ->
+                dialog.dismiss()
+            }
+
+        val alert = dialogBuilder.create()
+        alert.setOnShowListener {
+            // Set custom style for the positive button (Yes)
+            alert.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
+                ContextCompat.getColor(requireActivity(), android.R.color.black))
+            // Set custom style for the negative button (No)
+            alert.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
+                ContextCompat.getColor(requireActivity(), android.R.color.black))
+        }
+        alert.show()
+    }
+
     override fun onMarkerClick(marker: Marker): Boolean {
 //        val position = marker.position
 //        val latitude = position.latitude
@@ -190,6 +213,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         // Move the camera to the clicked location
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        locationManager = requireActivity().getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -224,39 +255,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private fun isGPSEnabled(): Boolean {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
-
-    private fun showGPSDisabledDialog() {
-        val dialogBuilder = AlertDialog.Builder(requireActivity())
-        dialogBuilder.setMessage("GPS is disabled. Enable GPS in the device settings to use this feature.")
-            .setCancelable(false)
-            .setPositiveButton("Settings") { dialog: DialogInterface, _: Int ->
-                dialog.dismiss()
-                val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(settingsIntent)
-            }
-            .setNegativeButton("Cancel") { dialog: DialogInterface, _: Int ->
-                dialog.dismiss()
-            }
-
-        val alert = dialogBuilder.create()
-        alert.setOnShowListener {
-            // Set custom style for the positive button (Yes)
-            alert.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
-                ContextCompat.getColor(requireActivity(), android.R.color.black))
-            // Set custom style for the negative button (No)
-            alert.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
-                ContextCompat.getColor(requireActivity(), android.R.color.black))
-        }
-        alert.show()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        locationManager = requireActivity().getSystemService(
-            Context.LOCATION_SERVICE
-        ) as LocationManager
-    }
-
 
     companion object {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1

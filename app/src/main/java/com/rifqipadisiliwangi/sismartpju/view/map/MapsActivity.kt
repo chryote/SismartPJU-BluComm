@@ -64,7 +64,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             onSubmitButtonClick()
         }
 
-        val backButton = findViewById<ImageView>(R.id.btn_back)
+        val backButton = findViewById<ImageView>(R.id.iv_back)
         backButton.setOnClickListener {
             finish()
         }

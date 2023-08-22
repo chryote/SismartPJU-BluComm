@@ -62,9 +62,6 @@
         android:usesCleartextTraffic="false"
         tools:targetApi="31">
         <activity
-            android:name=".view.imagepicker.ImagePickerActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.daftar.controller.DaftarControllerActivity"
             android:exported="false" />
         <activity
@@ -72,10 +69,10 @@
             android:exported="false" />
         <activity
             android:name=".view.pairing.pairingdua.AddControllerActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".view.detail.DetailPekerjaanActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".view.map.MapsActivity"
             android:exported="false" />
