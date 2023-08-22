@@ -58,10 +58,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         super.onViewCreated(view, savedInstanceState)
         recyclerShown()
 
-        binding.cvMaps.setOnClickListener {
-            startActivity(Intent(context, MapsActivity::class.java))
-        }
-
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
         binding.etSearchLocation.setOnKeyListener { _, keyCode, event ->
