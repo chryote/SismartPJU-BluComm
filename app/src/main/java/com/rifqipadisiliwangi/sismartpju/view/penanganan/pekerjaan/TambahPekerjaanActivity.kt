@@ -21,6 +21,10 @@ import com.rifqipadisiliwangi.sismartpju.databinding.ActivityTambahPekerjaanBind
 import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 import com.rifqipadisiliwangi.sismartpju.view.penanganan.spesifikasi.SpesifikasiActivity
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 
 class TambahPekerjaanActivity : AppCompatActivity() {
@@ -98,6 +102,19 @@ class TambahPekerjaanActivity : AppCompatActivity() {
             binding.imgUploadPekerjaanSesudah.isGone = true
             binding.ivTrashImgSesudah.isVisible = false
         }
+    }
+
+    private fun doPost(){
+        val client = OkHttpClient()
+        val mediaType = "text/plain".toMediaType()
+        val body = "{\r\n\"idne\": 24,\r\n\"tgl\": 24,\r\n\"link\": 25,\r\n\"usernya\": 26,\r\n\"idpju\": 27,\r\n\"idpelanggan\": 28,\r\n\"tanggalperbaikan\": 29,\r\n\"foto1\": 30,\r\n\"foto2\": 31,\r\n\"hasilperbaikan\": 32,\r\n\"keteranganlainnya\": 33,\r\n\"jenisperbaikan\": 34\r\n}".toRequestBody(mediaType)
+        val request = Request.Builder()
+            .url("https://sisemarpju.smartlinks.id/dd7aa54f4f45f0e7e38d8724554193ba")
+            .post(body)
+            .addHeader("Content-Type", "text/plain")
+            .addHeader("Authorization", "Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
+            .build()
+        val response = client.newCall(request).execute()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
