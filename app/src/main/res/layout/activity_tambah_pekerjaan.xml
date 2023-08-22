@@ -157,9 +157,9 @@
                                 android:id="@+id/ll_upload_pekerjaan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_25sdp"
                                 android:gravity="center_horizontal"
                                 android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/cv_img_consultation"
                                 app:layout_constraintStart_toStartOf="@+id/cv_img_consultation"
                                 app:layout_constraintTop_toTopOf="@+id/cv_img_consultation">
@@ -176,7 +176,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_12sdp"
                                     android:fontFamily="@font/inter_medium"
-                                    android:text="Upload."
+                                    android:text="Ambil Gambar."
                                     android:textColor="@color/grey_font_detail"
                                     android:textSize="@dimen/_12ssp"
                                     app:layout_constraintEnd_toEndOf="@id/cv_img_consultation"
@@ -186,20 +186,6 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_format_upload"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginVertical="@dimen/_10sdp"
-                                android:fontFamily="@font/inter_regular"
-                                android:text="Format upload foto adalah .jpg atau .jpeg"
-                                android:textColor="@color/grey_font_detail"
-                                android:textSize="@dimen/_10ssp"
-                                android:visibility="visible"
-                                app:layout_constraintEnd_toEndOf="@id/cv_img_consultation"
-                                app:layout_constraintStart_toStartOf="@+id/cv_img_consultation"
-                                app:layout_constraintTop_toBottomOf="@+id/ll_upload_pekerjaan"
-                                tools:ignore="MissingConstraints" />
 
                             <ImageView
                                 android:id="@+id/iv_trash_img"
@@ -268,9 +254,9 @@
                                 android:id="@+id/ll_upload_sesudah"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_25sdp"
                                 android:gravity="center_horizontal"
                                 android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/cv_img_sesudah"
                                 app:layout_constraintStart_toStartOf="@+id/cv_img_sesudah"
                                 app:layout_constraintTop_toTopOf="@+id/cv_img_sesudah">
@@ -287,7 +273,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_12sdp"
                                     android:fontFamily="@font/inter_medium"
-                                    android:text="Upload."
+                                    android:text="Ambil Gambar."
                                     android:textColor="@color/grey_font_detail"
                                     android:textSize="@dimen/_12ssp"
                                     app:layout_constraintEnd_toEndOf="@id/cv_img_consultation"
@@ -296,21 +282,6 @@
                                     tools:ignore="MissingConstraints" />
 
                             </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_format_upload_sesudah"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginVertical="@dimen/_10sdp"
-                                android:fontFamily="@font/inter_regular"
-                                android:text="Format upload foto adalah .jpg atau .jpeg"
-                                android:textColor="@color/grey_font_detail"
-                                android:textSize="@dimen/_10ssp"
-                                android:visibility="visible"
-                                app:layout_constraintEnd_toEndOf="@id/cv_img_sesudah"
-                                app:layout_constraintStart_toStartOf="@+id/cv_img_sesudah"
-                                app:layout_constraintTop_toBottomOf="@+id/ll_upload_sesudah"
-                                tools:ignore="MissingConstraints" />
 
                             <ImageView
                                 android:id="@+id/iv_trash_img_sesudah"

@@ -1,6 +1,7 @@
 package com.rifqipadisiliwangi.sismartpju.view.auth
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -48,27 +49,30 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        doLogin()
 
-        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
-            startActivity(Intent(this, DashboardActivity::class.java))
-        } else {
-            // Handle login button click
-            binding.btnLogin.setOnClickListener {
-                doLogin()
-                // Perform login validation
-                if (binding.etUsername.text.toString().isNotEmpty() && binding.etPassword.text.toString().isNotEmpty()) {
-                    // Save logged in status to SharedPreferences
-                    val editor = sharedPrefs.edit()
-                    editor.putBoolean("isLoggedIn", true)
-                    editor.apply()
-                    startActivity(Intent(this, DashboardActivity::class.java))
-                } else {
-                    Toast.makeText(this, "Please enter valid credentials", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
+//        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+//        val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
+//        if (isLoggedIn) {
+//            startActivity(Intent(this, DashboardActivity::class.java))
+//        } else {
+//            // Handle login button click
+//            binding.btnLogin.setOnClickListener {
+//                doLogin()
+//                // Perform login validation
+//                if (binding.etUsername.text.toString()
+//                        .isNotEmpty() && binding.etPassword.text.toString().isNotEmpty()
+//                ) {
+//                    // Save logged in status to SharedPreferences
+//                    val editor = sharedPrefs.edit()
+//                    editor.putBoolean("isLoggedIn", true)
+//                    editor.apply()
+//                    startActivity(Intent(this, DashboardActivity::class.java))
+//                } else {
+//                    Toast.makeText(this, "Please enter valid credentials", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            }
 
             binding.showPassBtn.setOnClickListener {
                 isPasswordVisible = !isPasswordVisible
@@ -93,8 +97,6 @@ class LoginActivity : AppCompatActivity() {
 
                 }
             })
-
-        }
     }
 
     private fun togglePasswordVisibility() {
@@ -125,6 +127,13 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
             val client = OkHttpClient()
+
+            // Show progress dialog
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Logging in...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     val loginResponse = e.toString()
@@ -139,6 +148,7 @@ class LoginActivity : AppCompatActivity() {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
+                        progressDialog.dismiss() // Dismiss progress dialog
                         runOnUiThread {
                             val loginResponse = response.body
                             loginResponse?.let {

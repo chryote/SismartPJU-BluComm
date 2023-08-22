@@ -4,13 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Location
+import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,30 +17,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.PekerjaanSingleton
-import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.ResponsePjuItem
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.TipePju
-import com.rifqipadisiliwangi.sismartpju.data.network.ApiClient
 import com.rifqipadisiliwangi.sismartpju.databinding.FragmentHomeBinding
 import com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan.AdapterPekerjaanItem
 import com.rifqipadisiliwangi.sismartpju.view.map.MapsActivity
 import com.rifqipadisiliwangi.sismartpju.viewmodel.ViewModelPekerjaanPju
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 private const val TAG = "HomeFragment"
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnMapClickListener  {
@@ -73,7 +64,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
-
+        binding.etSearchLocation.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                searchLocation()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
 
         locationManager = requireActivity().getSystemService(
             Context.LOCATION_SERVICE
@@ -93,6 +90,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
             }
         })
         viewModel.callApiPju()
+    }
+
+    private fun searchLocation() {
+        val locationName = binding.etSearchLocation.text.toString()
+        if (locationName == ""){
+            Toast.makeText(requireActivity(),"Lokasi Tidak Dapat Tampil", Toast.LENGTH_SHORT).show()
+        }else{
+            val geocoder = Geocoder(requireActivity())
+            val addressList = geocoder.getFromLocationName(locationName, 1)
+            if (!addressList.isNullOrEmpty()) {
+                val address = addressList[0]
+                val latLng = LatLng(address.latitude, address.longitude)
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f))
+            } else {
+                Toast.makeText(requireActivity(), "Lokasi tidak ditemukan", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onMapReady(map: GoogleMap) {
