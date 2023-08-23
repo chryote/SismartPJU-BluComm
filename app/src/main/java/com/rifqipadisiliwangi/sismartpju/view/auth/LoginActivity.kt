@@ -49,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        doLogin()
         loginRequest()
 
 //        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -115,75 +114,6 @@ class LoginActivity : AppCompatActivity() {
         // Move the cursor to the end of the password field to maintain cursor position
         binding.etPassword.setSelection(binding.etPassword.text.length)
     }
-    private fun doLogin(){
-        binding.btnLogin.setOnClickListener {
-            val mediaType = "text/plain".toMediaType()
-            val body = ("{\r\n\"username\": \"${binding.etUsername.text.toString().trimIndent()}\",\r\n\"password\": " +
-                    "\"${binding.etPassword.text.toString().trimIndent()}\" \r\n}").toRequestBody(mediaType)
-            val request = Request.Builder()
-                .url("https://sisemarpju.smartlinks.id/dd163577ea063b814f85b490a748d583?")
-                .post(body)
-                .addHeader("Content-Type", "text/plain")
-                .addHeader("Authorization", "Basic RGlzaHVidXNlcjIxMjp1c2VyRGlzaHViMjEy")
-                .build()
-
-            val client = OkHttpClient()
-
-            // Show progress dialog
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Logging in...")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    val loginResponse = e.toString()
-                    loginResponse.let {
-                        runOnUiThread {
-                            Toast.makeText(this@LoginActivity,
-                                "Login failed", Toast.LENGTH_SHORT).show()
-                            Log.d(TAG, e.toString())
-                        }
-                    }
-                }
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call, response: Response) {
-                    if (response.isSuccessful) {
-                        progressDialog.dismiss() // Dismiss progress dialog
-                        runOnUiThread {
-                            val loginResponse = response.body
-                            loginResponse?.let {
-                                var parseObj = ""
-                                parseObj =
-                                    response.body?.string()?.toString().toString()
-                                Log.d("okhttp-response", parseObj)
-//                                parseObj = parsingBody
-                                val stringObj = """
-                                    {"tipe":[{"statusonline":"Offline","statususer":"kedaireka"}],"Respon_code":"1010","Respon_desc":"Sukses"}
-                                """.trimIndent()
-                                if (stringObj == parseObj){
-                                    startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-                                    Toast.makeText(this@LoginActivity, "Berhasil Login", Toast.LENGTH_SHORT).show()
-                                    finish()
-                                } else{
-                                Toast.makeText(this@LoginActivity, "Username atau Password salah", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        }
-                    } else {
-                        // Handle API error here
-                        // You can extract the error message from the response
-                        // using response.errorBody()?.string()
-                        runOnUiThread {
-                            Toast.makeText(this@LoginActivity,
-                                "Login failed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            })
-        }
-    }
-
     private fun loginRequest(){
 
         binding.btnLogin.setOnClickListener {
