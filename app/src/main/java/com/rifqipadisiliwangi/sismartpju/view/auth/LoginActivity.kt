@@ -49,7 +49,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        doLogin()
+//        doLogin()
+        loginRequest()
 
 //        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 //        val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
@@ -185,23 +186,45 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginRequest(){
 
-        GlobalScope.launch(Dispatchers.Main) {
+        binding.btnLogin.setOnClickListener {
 
-            val mediaType = "text/plain".toMediaType()
-            val username = (binding.etUsername.text.toString().trimIndent()).toRequestBody(mediaType)
-            val password = (binding.etPassword.text.toString().trimIndent()).toRequestBody(mediaType)
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Logging in...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
 
+            GlobalScope.launch(Dispatchers.Main) {
+                val username = binding.etUsername.text.toString()
+                val password = binding.etPassword.text.toString()
+                // Show progress dialog
 
-            val response = ApiClient.instance.login(LoginRequestIem(username.toString(), password.toString()))
-            if (response.isSuccessful) {
-                // Login berhasil
-                val responseBody: LoginResponseItem? = response.body()
-                Log.d(TAG, "Response: $responseBody")
-            } else {
-                // Login gagal
-                Log.d(TAG, "Response: ${response.errorBody()}")
+                val response = ApiClient.instance.login(LoginRequestIem(username, password))
+                if (response.isSuccessful) {
+                    progressDialog.dismiss() // Dismiss progress dialog
+                    runOnUiThread {
+                        val loginResponse = response.body()
+                        loginResponse?.let {
+                            val parseObj = response.body().toString()
+                            Log.d("okhttp-response", parseObj)
+//                                parseObj = parsingBody
+                            val stringObj ="LoginResponseItem(Respon_code=1010, Respon_desc=Sukses, tipe=[Tipe(statusonline=Offline, statususer=kedaireka)])"
+                            if (stringObj == parseObj){
+                                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                                Toast.makeText(this@LoginActivity, "Berhasil Login", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else{
+                                Toast.makeText(this@LoginActivity, "Username atau Password salah", Toast.LENGTH_SHORT).show()
+                            }
+                            Log.d(TAG, loginResponse.toString())
+                        }
+                    }
+                } else {
+                    // Login gagal
+                    Log.d(TAG, "Response: ${response.errorBody()}")
+                }
             }
         }
+
     }
 
     @Deprecated("Deprecated in Java")
