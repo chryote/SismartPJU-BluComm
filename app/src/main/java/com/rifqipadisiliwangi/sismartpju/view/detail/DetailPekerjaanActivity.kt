@@ -63,7 +63,7 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
         val intent = Intent(this, TambahPekerjaanActivity::class.java)
         intent.putExtra("id",id)
         intent.putExtra("idpekerjaan",binding.tvTitleId.text.toString())
-        intent.putExtra("idpju",binding.tvTitleId.text.toString())
+        intent.putExtra("idpju",binding.tvTitlePju.text.toString())
         intent.putExtra("tgl", binding.tvTitleDate.text.toString())
         intent.putExtra("alamat", binding.tvTitleAddress.text.toString())
         intent.putExtra("kondisi", binding.tvKondisi.text.toString())

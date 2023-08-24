@@ -1,6 +1,7 @@
 package com.rifqipadisiliwangi.sismartpju.view.auth
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
@@ -29,7 +30,11 @@ private const val TAG = "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
-    private lateinit var sharedPrefs: SharedPreferences
+    private lateinit var sharedpreferences: SharedPreferences
+
+
+    private var username: String? = null
+    private var password: String? = null
 
     private var isPasswordVisible = false
     @RequiresApi(Build.VERSION_CODES.O)
@@ -38,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loginRequest()
+        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
         binding.showPassBtn.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
@@ -85,17 +91,18 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
 
+
             val progressDialog = ProgressDialog(this)
             progressDialog.setMessage("Logging in...")
             progressDialog.setCancelable(false)
             progressDialog.show()
 
             GlobalScope.launch(Dispatchers.Main) {
-                val username = binding.etUsername.text.toString()
-                val password = binding.etPassword.text.toString()
+                username = binding.etUsername.text.toString()
+                password = binding.etPassword.text.toString()
                 // Show progress dialog
 
-                val response = ApiClient.instance.login(LoginRequestIem(username, password))
+                val response = ApiClient.instance.login(LoginRequestIem(username!!, password!!))
                 if (response.isSuccessful) {
                     progressDialog.dismiss() // Dismiss progress dialog
                     runOnUiThread {
@@ -103,6 +110,10 @@ class LoginActivity : AppCompatActivity() {
                         if (loginResponse == null){
                             Toast.makeText(this@LoginActivity, "Username atau password salah", Toast.LENGTH_SHORT).show()
                         }else{
+                            val editor = sharedpreferences.edit()
+                            editor.putString(USERNAME_KEY, username)
+                            editor.putString(PASSWORD_KEY, password)
+                            editor.apply()
                             startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
                             Toast.makeText(this@LoginActivity, "Berhasil Login", Toast.LENGTH_SHORT).show()
                             finish()
@@ -131,5 +142,17 @@ class LoginActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
             }
             .show()
+    }
+    override fun onStart() {
+        super.onStart()
+        if (username != null && password != null) {
+            val i = Intent(this@LoginActivity, DashboardActivity::class.java)
+            startActivity(i)
+        }
+    }
+    companion object {
+        const val SHARED_PREFS = "shared_prefs"
+        const val USERNAME_KEY = "username_key"
+        const val PASSWORD_KEY = "password_key"
     }
 }

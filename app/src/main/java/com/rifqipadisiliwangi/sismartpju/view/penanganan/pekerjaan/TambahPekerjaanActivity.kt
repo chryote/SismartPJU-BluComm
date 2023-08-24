@@ -29,6 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private const val TAG = "TambahPekerjaanActivity"
 class TambahPekerjaanActivity : AppCompatActivity() {
@@ -39,12 +42,13 @@ class TambahPekerjaanActivity : AppCompatActivity() {
     var jkList = arrayOf("Perbaikan kabel jaringan kongslet","Perbaikan lampu mati", "Perbaikan installasi box", "Perbaikan MCB Tiang")
 
     private var imageView: ImageView? = null
-    private var title: String = ""
-    private var titlePju = ""
     private var titleDate = ""
+    private var titleCurrentDate = ""
     private var titleAdrress = ""
     private var kondisi = ""
     private var id = ""
+    private var idPju = ""
+    private var idPelanggan = ""
     private var lat = ""
     private var lot = ""
 
@@ -109,22 +113,11 @@ class TambahPekerjaanActivity : AppCompatActivity() {
             progressDialog.setMessage("Logging in...")
             progressDialog.setCancelable(false)
             progressDialog.show()
+            val currentDate = getCurrentDate("yyyy-MM-dd HH:mm:ss")
+            titleCurrentDate = currentDate
 
             GlobalScope.launch(Dispatchers.Main) {
-                val idne = id.toInt()
-                val tgl = 24
-                val link = 25
-                val usernya = 26
-                val idpju = 27
-                val idpelanggan = 28
-                val tanggalperbaikan = 29
-                val foto1 = 30
-                val foto2 = 31
-                val hasilperbaikan = 32
-                val keteranganlainnya = 33
-                val jenisperbaikan = 34
-
-                val response = ApiClient.instance.pjuPerbaikan(PerbaikanRequestItem(idne, tgl, link, usernya, idpju, idpelanggan, tanggalperbaikan, foto1, foto2, hasilperbaikan, keteranganlainnya, jenisperbaikan))
+                val response = ApiClient.instance.pjuPerbaikan(PerbaikanRequestItem(id, titleDate, "", "", idPju, idPelanggan, titleCurrentDate, "", "", binding.spHasil.selectedItem.toString(), binding.etNote.text.toString(), binding.spJenis.selectedItem.toString()))
                 if (response.isSuccessful) {
                     progressDialog.dismiss() // Dismiss progress dialog
                     runOnUiThread {
@@ -217,8 +210,8 @@ class TambahPekerjaanActivity : AppCompatActivity() {
     }
     private fun getBundle(){
         id = intent.extras?.getString("id") ?: "Tidak Terdeteksi"
-        title = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
-        titlePju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
+        idPelanggan = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
+        idPju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
         titleDate = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
         titleAdrress = intent.extras?.getString("alamat") ?: "Tidak Terdeteksi"
         kondisi = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
@@ -228,14 +221,20 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     private fun toSpesifikasi(){
         val intent = Intent(this, SpesifikasiActivity::class.java)
-        intent.putExtra("idpekerjaan",title)
-        intent.putExtra("idpju",titlePju)
+        intent.putExtra("idpekerjaan",idPelanggan)
+        intent.putExtra("idpju",idPju)
         intent.putExtra("tgl", titleDate)
         intent.putExtra("alamat",titleAdrress)
         intent.putExtra("kondisi",kondisi)
         intent.putExtra("lat", lat)
         intent.putExtra("lot",lot)
         this.startActivity(intent)
+    }
+
+    private fun getCurrentDate(format: String): String {
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+        val currentDate = Date()
+        return dateFormat.format(currentDate)
     }
 
     override fun onBackPressed() {

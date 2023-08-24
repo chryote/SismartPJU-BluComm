@@ -1,16 +1,16 @@
 package com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan
 
 data class PerbaikanRequestItem(
-    val idne: Int,
-    val tgl: Int,
-    val link: Int,
-    val usernya: Int,
-    val idpju: Int,
-    val idpelanggan: Int,
-    val tanggalperbaikan: Int,
-    val foto1: Int,
-    val foto2: Int,
-    val hasilperbaikan: Int,
-    val keteranganlainnya: Int,
-    val jenisperbaikan: Int,
+    val idne: String,
+    val tgl: String,
+    val link: String,
+    val usernya: String,
+    val idpju: String,
+    val idpelanggan: String,
+    val tanggalperbaikan: String,
+    val foto1: String,
+    val foto2: String,
+    val hasilperbaikan: String,
+    val keteranganlainnya: String,
+    val jenisperbaikan: String,
 )
