@@ -1,32 +1,36 @@
 package com.rifqipadisiliwangi.sismartpju.view.penanganan.pekerjaan
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.media.ThumbnailUtils
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.rifqipadisiliwangi.sismartpju.R
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan.PerbaikanRequestItem
+import com.rifqipadisiliwangi.sismartpju.data.network.ApiClient
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityTambahPekerjaanBinding
-import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 import com.rifqipadisiliwangi.sismartpju.view.penanganan.spesifikasi.SpesifikasiActivity
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
+private const val TAG = "TambahPekerjaanActivity"
 class TambahPekerjaanActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTambahPekerjaanBinding
@@ -40,15 +44,9 @@ class TambahPekerjaanActivity : AppCompatActivity() {
     private var titleDate = ""
     private var titleAdrress = ""
     private var kondisi = ""
+    private var id = ""
     private var lat = ""
     private var lot = ""
-
-    private val RESULT_LOAD_IMAGE = 123
-    private val REQUEST_CODE_GALLERY = 999
-
-    private var imagePostPekerjaan: Bitmap? = null
-    private val REQUEST_IMAGE_CAPTURE = 1
-    private val REQUEST_IMAGE_PICK = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +56,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         loadSpinerJenis()
         loadSpinerHasil()
         getBundle()
+        perbaikanRequest()
 
         binding.btnSpesifikasi.setOnClickListener {
             toSpesifikasi()
@@ -67,10 +66,6 @@ class TambahPekerjaanActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.btnAdd.setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
-            finish()
-        }
     }
 
     private fun requestCamera(){
@@ -104,17 +99,52 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
     }
 
-    private fun doPost(){
-        val client = OkHttpClient()
-        val mediaType = "text/plain".toMediaType()
-        val body = "{\r\n\"idne\": 24,\r\n\"tgl\": 24,\r\n\"link\": 25,\r\n\"usernya\": 26,\r\n\"idpju\": 27,\r\n\"idpelanggan\": 28,\r\n\"tanggalperbaikan\": 29,\r\n\"foto1\": 30,\r\n\"foto2\": 31,\r\n\"hasilperbaikan\": 32,\r\n\"keteranganlainnya\": 33,\r\n\"jenisperbaikan\": 34\r\n}".toRequestBody(mediaType)
-        val request = Request.Builder()
-            .url("https://sisemarpju.smartlinks.id/dd7aa54f4f45f0e7e38d8724554193ba")
-            .post(body)
-            .addHeader("Content-Type", "text/plain")
-            .addHeader("Authorization", "Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
-            .build()
-        val response = client.newCall(request).execute()
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun perbaikanRequest(){
+
+        binding.btnAdd.setOnClickListener {
+
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Logging in...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
+            GlobalScope.launch(Dispatchers.Main) {
+                val idne = id.toInt()
+                val tgl = 24
+                val link = 25
+                val usernya = 26
+                val idpju = 27
+                val idpelanggan = 28
+                val tanggalperbaikan = 29
+                val foto1 = 30
+                val foto2 = 31
+                val hasilperbaikan = 32
+                val keteranganlainnya = 33
+                val jenisperbaikan = 34
+
+                val response = ApiClient.instance.pjuPerbaikan(PerbaikanRequestItem(idne, tgl, link, usernya, idpju, idpelanggan, tanggalperbaikan, foto1, foto2, hasilperbaikan, keteranganlainnya, jenisperbaikan))
+                if (response.isSuccessful) {
+                    progressDialog.dismiss() // Dismiss progress dialog
+                    runOnUiThread {
+                        val perbaikanResponse = response.body()
+                        if (perbaikanResponse == null){
+                            Toast.makeText(this@TambahPekerjaanActivity, "Gagal Menambahkan Hasil Pekerjaan", Toast.LENGTH_SHORT).show()
+                        }else{
+                            startActivity(Intent(this@TambahPekerjaanActivity, DashboardActivity::class.java))
+                            Toast.makeText(this@TambahPekerjaanActivity, "Berhasil Menambahkan Hasil Pekerjaan", Toast.LENGTH_SHORT).show()
+                            finish()
+                            Log.d(TAG, perbaikanResponse.toString())
+                        }
+                    }
+                } else {
+                    // Login gagal
+                    Log.d(TAG, "Response: ${response.errorBody()}")
+                }
+            }
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -186,6 +216,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         tkItem.setDropDownViewResource(R.layout.spinner_right_aligned)
     }
     private fun getBundle(){
+        id = intent.extras?.getString("id") ?: "Tidak Terdeteksi"
         title = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
         titlePju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
         titleDate = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"

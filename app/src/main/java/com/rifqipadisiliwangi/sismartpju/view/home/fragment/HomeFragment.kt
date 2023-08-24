@@ -30,8 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.TipePju
 import com.rifqipadisiliwangi.sismartpju.databinding.FragmentHomeBinding
 import com.rifqipadisiliwangi.sismartpju.view.adapter.pekerjaan.AdapterPekerjaanItem
-import com.rifqipadisiliwangi.sismartpju.view.map.MapsActivity
-import com.rifqipadisiliwangi.sismartpju.viewmodel.ViewModelPekerjaanPju
+import com.rifqipadisiliwangi.sismartpju.viewmodel.ViewModelItem
 
 private const val TAG = "HomeFragment"
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
@@ -73,7 +72,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     }
     private fun recyclerShown(){
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelItem::class.java)
         viewModel.getPju().observe(viewLifecycleOwner, Observer {
             if (it != null){
                 listPju = it.tipe
@@ -107,7 +106,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelPekerjaanPju::class.java)
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelItem::class.java)
         viewModel.getPju().observe(viewLifecycleOwner, Observer {
             if (it != null){
                 pekerjaanAdapter = AdapterPekerjaanItem(requireActivity(),listPju, googleMap)

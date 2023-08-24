@@ -63,6 +63,7 @@ class AdapterPekerjaanItem(
             val intent = Intent(context, DetailPekerjaanActivity::class.java)
             intent.putExtra("idpekerjaan", listPju[position].idpelanggan)
             intent.putExtra("idpju", listPju[position].idpju)
+            intent.putExtra("id", listPju[position].idne)
             intent.putExtra("tgl", listPju[position].tgl)
             intent.putExtra("alamat", holder.binding.tvAddress.text.toString())
             intent.putExtra("kondisi", "Kondisi : ${listPju[position].kondisi}")

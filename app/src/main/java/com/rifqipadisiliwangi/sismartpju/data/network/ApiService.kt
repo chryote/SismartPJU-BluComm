@@ -3,6 +3,8 @@ package com.rifqipadisiliwangi.sismartpju.data.network
 import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginRequestIem
 import com.rifqipadisiliwangi.sismartpju.data.model.login.LoginResponseItem
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuerror.ResponsePjuItem
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan.PerbaikanRequestItem
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan.PerbaikanResponseItem
 import com.rifqipadisiliwangi.sismartpju.data.utils.Constants
 import retrofit2.Call
 import retrofit2.Response
@@ -15,12 +17,15 @@ import retrofit2.http.POST
 
 interface ApiService {
     @Headers("Authorization: Basic RGlzaHVidXNlcjIxMjp1c2VyRGlzaHViMjEy")
-    @POST("dd163577ea063b814f85b490a748d583?")
+    @POST(Constants.LOGIN)
     suspend fun login(
-//        @Field("username") username: String,
-//        @Field("password") password: String
         @Body requestBody: LoginRequestIem
     ): Response<LoginResponseItem>
+    @Headers("Authorization: Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
+    @POST(Constants.PJU_PERBAIKAN)
+    suspend fun pjuPerbaikan(
+        @Body requestBody: PerbaikanRequestItem
+    ): Response<PerbaikanResponseItem>
 
     @Headers("Authorization: Basic RGlzaHViZGF0YWxwanUyMTI6ZGF0YWxwanVEaXNodWIyMTI=")
     @GET(Constants.PJU_ERROR)

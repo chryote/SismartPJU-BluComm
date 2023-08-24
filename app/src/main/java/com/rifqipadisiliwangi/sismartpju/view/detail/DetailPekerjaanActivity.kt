@@ -19,6 +19,7 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var binding: ActivityDetailPekerjaanBinding
     private var lat : String= ""
     private var lot : String= ""
+    private var id : String= ""
 
     private lateinit var googleMap: GoogleMap
 
@@ -49,6 +50,7 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     private fun getBundle(){
+        id = intent.extras?.getString("id") ?: "Tidak Terdeteksi"
         binding.tvTitleId.text = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
         binding.tvTitlePju.text = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
         binding.tvTitleDate.text = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
@@ -59,6 +61,7 @@ class DetailPekerjaanActivity : AppCompatActivity(), OnMapReadyCallback{
     }
     private fun toSpesifikasi(){
         val intent = Intent(this, TambahPekerjaanActivity::class.java)
+        intent.putExtra("id",id)
         intent.putExtra("idpekerjaan",binding.tvTitleId.text.toString())
         intent.putExtra("idpju",binding.tvTitleId.text.toString())
         intent.putExtra("tgl", binding.tvTitleDate.text.toString())
