@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.os.Environment
@@ -21,6 +20,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan.PerbaikanRequestItem
+import com.rifqipadisiliwangi.sismartpju.data.model.pekerjaan.pjuperbaikan.ResponsePicturePerbaikan
 import com.rifqipadisiliwangi.sismartpju.data.network.ApiClient
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityTambahPekerjaanBinding
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
@@ -29,11 +29,12 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -47,6 +48,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTambahPekerjaanBinding
     private var imagePost: Bitmap? = null
+    private lateinit var progressDialog : ProgressDialog
 
     var tkList = arrayOf("Selesai","Belum Selesai")
     var jkList = arrayOf("Perbaikan kabel jaringan kongslet","Perbaikan lampu mati", "Perbaikan installasi box", "Perbaikan MCB Tiang")
@@ -70,8 +72,8 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         loadSpinerJenis()
         loadSpinerHasil()
         getBundle()
+        postPerbaikan()
 //        perbaikanRequest()
-        cobaOkhttpMultipart()
         binding.btnSpesifikasi.setOnClickListener {
             toSpesifikasi()
         }
@@ -113,30 +115,76 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
     }
 
-    private fun cobaOkhttpMultipart(){
-        binding.btnAdd.setOnClickListener {
-            GlobalScope.launch {
-                val imageFile = convertTempFile(imagePost)
+    private fun postPerbaikan(){
 
-                val client = OkHttpClient()
-                val mediaType = "text/plain".toMediaType()
-                val body = imageFile?.let {
-                    MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("file", imageFile.toString(),
-                            it.asRequestBody("application/octet-stream".toMediaType()))
-                        .build()
-                }
-                val request = body?.let {
-                    Request.Builder()
-                        .url("https://sisemarpju.smartlinks.id/android/uploadfoto2.php")
-                        .post(it)
-                        .addHeader("Authorization", "Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
-                        .build()
-                }
-                val response = request?.let { client.newCall(it).execute() }
-                Log.d(TAG, response.toString())
+        binding.btnAdd.setOnClickListener {
+
+            val requestImage: RequestBody?
+            val imagePart: MultipartBody.Part?
+
+            if (imagePost != null) {
+                // The user has selected an image
+                val imageFile = convertTempFile(imagePost)
+//            requestImage = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
+                Log.d(TAG, "image-file : $imageFile")
+                val mimeType = "image/${imageFile!!.extension}"
+                requestImage = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
+                imagePart = MultipartBody.Part.createFormData("foto1", imageFile.name, requestImage)
+            } else {
+                // The user has not selected an image
+                requestImage = null
+                imagePart = null
             }
 
+            Log.d(TAG, binding.imgUploadPekerjaan.toString())
+            Log.d(TAG, "imagePart $imagePart")
+
+
+            progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Loading...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
+            ApiClient.instance.addPhoto(imagePart)
+                .enqueue(object : Callback<ResponsePicturePerbaikan> {
+                    override fun onResponse(
+                        call: Call<ResponsePicturePerbaikan>,
+                        response: Response<ResponsePicturePerbaikan>
+                    ) {
+                        progressDialog.dismiss()
+                        if (response.isSuccessful) {
+                            val addPjuResponse = response.body()
+                            Log.d(TAG,"Response : $addPjuResponse" )
+                            addPjuResponse?.let {
+                                val userData = it.msg
+                                Toast.makeText(
+                                    this@TambahPekerjaanActivity,
+                                    "Berhasil menambahkan laporan perbaikan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                onBackPressed()
+                            }
+                        } else {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@TambahPekerjaanActivity,
+                                    "Gagal menambahkan laporan perbaikan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponsePicturePerbaikan>, t: Throwable) {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            this@TambahPekerjaanActivity,
+                            "Gagal menambahkan laporan irigasi",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.e("UpdateProfileError", t.toString())
+                    }
+                })
         }
     }
     @OptIn(DelicateCoroutinesApi::class)
@@ -177,10 +225,12 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
+
             imagePost = data!!.extras!!["data"] as Bitmap?
             val dimension = imagePost!!.width.coerceAtMost(imagePost!!.height)
             imagePost = ThumbnailUtils.extractThumbnail(imagePost, dimension, dimension)
             binding.imgUploadPekerjaan.setImageBitmap(imagePost)
+            Log.d(TAG, "imagePart ${binding.imgUploadPekerjaan}")
             binding.imgUploadPekerjaan.isGone = false
             binding.ivTrashImg.isVisible = true
         }
