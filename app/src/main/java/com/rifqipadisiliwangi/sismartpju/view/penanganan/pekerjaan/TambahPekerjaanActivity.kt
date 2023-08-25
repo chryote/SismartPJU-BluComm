@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
@@ -28,7 +29,15 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,6 +46,7 @@ private const val TAG = "TambahPekerjaanActivity"
 class TambahPekerjaanActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTambahPekerjaanBinding
+    private var imagePost: Bitmap? = null
 
     var tkList = arrayOf("Selesai","Belum Selesai")
     var jkList = arrayOf("Perbaikan kabel jaringan kongslet","Perbaikan lampu mati", "Perbaikan installasi box", "Perbaikan MCB Tiang")
@@ -60,8 +70,8 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         loadSpinerJenis()
         loadSpinerHasil()
         getBundle()
-        perbaikanRequest()
-
+//        perbaikanRequest()
+        cobaOkhttpMultipart()
         binding.btnSpesifikasi.setOnClickListener {
             toSpesifikasi()
         }
@@ -103,7 +113,32 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
     }
 
+    private fun cobaOkhttpMultipart(){
+        binding.btnAdd.setOnClickListener {
+            GlobalScope.launch {
+                val imageFile = convertTempFile(imagePost)
 
+                val client = OkHttpClient()
+                val mediaType = "text/plain".toMediaType()
+                val body = imageFile?.let {
+                    MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("file", imageFile.toString(),
+                            it.asRequestBody("application/octet-stream".toMediaType()))
+                        .build()
+                }
+                val request = body?.let {
+                    Request.Builder()
+                        .url("https://sisemarpju.smartlinks.id/android/uploadfoto2.php")
+                        .post(it)
+                        .addHeader("Authorization", "Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
+                        .build()
+                }
+                val response = request?.let { client.newCall(it).execute() }
+                Log.d(TAG, response.toString())
+            }
+
+        }
+    }
     @OptIn(DelicateCoroutinesApi::class)
     private fun perbaikanRequest(){
 
@@ -142,10 +177,10 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            var image = data!!.extras!!["data"] as Bitmap?
-            val dimension = image!!.width.coerceAtMost(image.height)
-            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
-            binding.imgUploadPekerjaan.setImageBitmap(image)
+            imagePost = data!!.extras!!["data"] as Bitmap?
+            val dimension = imagePost!!.width.coerceAtMost(imagePost!!.height)
+            imagePost = ThumbnailUtils.extractThumbnail(imagePost, dimension, dimension)
+            binding.imgUploadPekerjaan.setImageBitmap(imagePost)
             binding.imgUploadPekerjaan.isGone = false
             binding.ivTrashImg.isVisible = true
         }
@@ -159,13 +194,6 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-    private fun imageViewToByte(image: ImageView): ByteArray? {
-        val bitmap = (image.drawable as BitmapDrawable).bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream)
-        return stream.toByteArray()
-    }
-
     private fun loadSpinerJenis(){
 
         var jkItem = ArrayAdapter(this, R.layout.spinner_right_aligned, jkList)
@@ -217,6 +245,26 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         kondisi = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
         lat = intent.extras?.getString("lat") ?: "Tidak Terdeteksi"
         lot = intent.extras?.getString("lot") ?: "Tidak Terdeteksi"
+    }
+
+    private fun convertTempFile(bitmap: Bitmap?): File? {
+        val file = File(
+            getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            System.currentTimeMillis().toString() + "_image.png"
+        )
+        val bos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 0, bos)
+        val bitmapData = bos.toByteArray()
+        //write the bytes in file
+        try {
+            val fos = FileOutputStream(file)
+            fos.write(bitmapData)
+            fos.flush()
+            fos.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return file
     }
 
     private fun toSpesifikasi(){
