@@ -23,7 +23,7 @@
         style="@style/primaryteks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SISMART PJU"
+        android:text="SISEMAR PJU"
         android:textSize="@dimen/_24ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
