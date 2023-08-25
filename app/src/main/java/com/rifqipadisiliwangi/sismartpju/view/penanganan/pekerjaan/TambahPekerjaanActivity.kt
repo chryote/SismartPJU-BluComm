@@ -48,17 +48,17 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTambahPekerjaanBinding
     private var imagePost: Bitmap? = null
+    private var imagePostAfter: Bitmap? = null
     private lateinit var progressDialog : ProgressDialog
 
     var tkList = arrayOf("Selesai","Belum Selesai")
     var jkList = arrayOf("Perbaikan kabel jaringan kongslet","Perbaikan lampu mati", "Perbaikan installasi box", "Perbaikan MCB Tiang")
 
-    private var imageView: ImageView? = null
     private var titleDate = ""
     private var titleCurrentDate = ""
     private var titleAdrress = ""
     private var kondisi = ""
-    private var id = ""
+    private var idne = ""
     private var idPju = ""
     private var idPelanggan = ""
     private var lat = ""
@@ -73,7 +73,6 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         loadSpinerHasil()
         getBundle()
         postPerbaikan()
-//        perbaikanRequest()
         binding.btnSpesifikasi.setOnClickListener {
             toSpesifikasi()
         }
@@ -83,6 +82,118 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
 
     }
+    private fun postPerbaikan(){
+
+        binding.btnAdd.setOnClickListener {
+
+            val currentDate = getCurrentDate("yyyy-MM-dd HH:mm:ss")
+            titleCurrentDate  = currentDate
+            titleDate = currentDate
+
+            val requestBody: MutableMap<String, RequestBody> = mutableMapOf(
+                "idne" to createPartFromString(idne),
+                "tgl" to createPartFromString(titleDate),
+                "link" to createPartFromString(""),
+                "usernya" to createPartFromString(""),
+                "idpju" to createPartFromString(idPju),
+                "idpelanggan" to createPartFromString(idPelanggan),
+                "tanggalperbaikan" to createPartFromString(titleCurrentDate),
+                "hasilperbaikan" to createPartFromString(binding.spHasil.selectedItem.toString()),
+                "keteranganlainnya" to createPartFromString( binding.etNote.text.toString().trim()),
+                "jenisperbaikan" to createPartFromString( binding.spJenis.selectedItem.toString()),
+            )
+
+
+            val requestImage: RequestBody?
+            val imagePart: MultipartBody.Part?
+
+            if (imagePost != null) {
+                // The user has selected an image
+                val imageFile = convertTempFile(imagePost)
+//            requestImage = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
+                Log.d(TAG, "image-file : $imageFile")
+                val mimeType = "image/${imageFile!!.extension}"
+                requestImage = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
+                imagePart = MultipartBody.Part.createFormData("foto1", imageFile.name, requestImage)
+            } else {
+                // The user has not selected an image
+                requestImage = null
+                imagePart = null
+            }
+
+            Log.d(TAG, binding.imgUploadPekerjaan.toString())
+            Log.d(TAG, "imagePart $imagePart")
+
+            val requestImageAfter: RequestBody?
+            val imagePartAfter: MultipartBody.Part?
+
+            if (imagePostAfter != null) {
+                // The user has selected an image
+                val imageFile = convertTempFile(imagePostAfter)
+                Log.d(TAG, "image-file : $imageFile")
+                val mimeType = "image/${imageFile!!.extension}"
+                requestImageAfter = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
+                imagePartAfter = MultipartBody.Part.createFormData("foto2", imageFile.name, requestImageAfter)
+            } else {
+                // The user has not selected an image
+                requestImageAfter = null
+                imagePartAfter = null
+            }
+
+            Log.d(TAG, binding.imgUploadPekerjaanSesudah.toString())
+            Log.d(TAG, "imagePart $imagePartAfter")
+
+
+            progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Loading...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
+            ApiClient.instance.addPhoto(requestBody, imagePart,imagePartAfter)
+                .enqueue(object : Callback<ResponsePicturePerbaikan> {
+                    override fun onResponse(
+                        call: Call<ResponsePicturePerbaikan>,
+                        response: Response<ResponsePicturePerbaikan>
+                    ) {
+                        progressDialog.dismiss()
+                        if (response.isSuccessful) {
+                            val addPjuResponse = response.body()
+                            Log.d(TAG,"Response : $addPjuResponse" )
+                            addPjuResponse?.let {
+                                val userData = it.msg
+                                Toast.makeText(
+                                    this@TambahPekerjaanActivity,
+                                    "Berhasil menambahkan laporan perbaikan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                onBackPressed()
+                            }
+                            startActivity(Intent(this@TambahPekerjaanActivity, DashboardActivity::class.java))
+                            finish()
+                        } else {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@TambahPekerjaanActivity,
+                                    "Gagal menambahkan laporan perbaikan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponsePicturePerbaikan>, t: Throwable) {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            this@TambahPekerjaanActivity,
+                            "Gagal menambahkan laporan irigasi",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.e("UpdateProfileError", t.toString())
+                    }
+                })
+        }
+    }
+
 
     private fun requestCamera(){
         binding.llUploadPekerjaan.setOnClickListener{
@@ -115,113 +226,6 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
     }
 
-    private fun postPerbaikan(){
-
-        binding.btnAdd.setOnClickListener {
-
-            val requestImage: RequestBody?
-            val imagePart: MultipartBody.Part?
-
-            if (imagePost != null) {
-                // The user has selected an image
-                val imageFile = convertTempFile(imagePost)
-//            requestImage = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
-                Log.d(TAG, "image-file : $imageFile")
-                val mimeType = "image/${imageFile!!.extension}"
-                requestImage = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
-                imagePart = MultipartBody.Part.createFormData("foto1", imageFile.name, requestImage)
-            } else {
-                // The user has not selected an image
-                requestImage = null
-                imagePart = null
-            }
-
-            Log.d(TAG, binding.imgUploadPekerjaan.toString())
-            Log.d(TAG, "imagePart $imagePart")
-
-
-            progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Loading...")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-
-            ApiClient.instance.addPhoto(imagePart)
-                .enqueue(object : Callback<ResponsePicturePerbaikan> {
-                    override fun onResponse(
-                        call: Call<ResponsePicturePerbaikan>,
-                        response: Response<ResponsePicturePerbaikan>
-                    ) {
-                        progressDialog.dismiss()
-                        if (response.isSuccessful) {
-                            val addPjuResponse = response.body()
-                            Log.d(TAG,"Response : $addPjuResponse" )
-                            addPjuResponse?.let {
-                                val userData = it.msg
-                                Toast.makeText(
-                                    this@TambahPekerjaanActivity,
-                                    "Berhasil menambahkan laporan perbaikan",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                onBackPressed()
-                            }
-                        } else {
-                            runOnUiThread {
-                                Toast.makeText(
-                                    this@TambahPekerjaanActivity,
-                                    "Gagal menambahkan laporan perbaikan",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponsePicturePerbaikan>, t: Throwable) {
-                        progressDialog.dismiss()
-                        Toast.makeText(
-                            this@TambahPekerjaanActivity,
-                            "Gagal menambahkan laporan irigasi",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("UpdateProfileError", t.toString())
-                    }
-                })
-        }
-    }
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun perbaikanRequest(){
-
-        binding.btnAdd.setOnClickListener {
-
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Logging in...")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-            val currentDate = getCurrentDate("yyyy-MM-dd HH:mm:ss")
-            titleCurrentDate = currentDate
-
-            GlobalScope.launch(Dispatchers.Main) {
-                val response = ApiClient.instance.pjuPerbaikan(PerbaikanRequestItem(id, titleDate, "", "", idPju, idPelanggan, titleCurrentDate, "", "", binding.spHasil.selectedItem.toString(), binding.etNote.text.toString(), binding.spJenis.selectedItem.toString()))
-                if (response.isSuccessful) {
-                    progressDialog.dismiss() // Dismiss progress dialog
-                    runOnUiThread {
-                        val perbaikanResponse = response.body()
-                        if (perbaikanResponse == null){
-                            Toast.makeText(this@TambahPekerjaanActivity, "Gagal Menambahkan Hasil Pekerjaan", Toast.LENGTH_SHORT).show()
-                        }else{
-                            startActivity(Intent(this@TambahPekerjaanActivity, DashboardActivity::class.java))
-                            Toast.makeText(this@TambahPekerjaanActivity, "Berhasil Menambahkan Hasil Pekerjaan", Toast.LENGTH_SHORT).show()
-                            finish()
-                            Log.d(TAG, perbaikanResponse.toString())
-                        }
-                    }
-                } else {
-                    // Login gagal
-                    Log.d(TAG, "Response: ${response.errorBody()}")
-                }
-            }
-        }
-
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -235,10 +239,10 @@ class TambahPekerjaanActivity : AppCompatActivity() {
             binding.ivTrashImg.isVisible = true
         }
         if (requestCode == 2 && resultCode == RESULT_OK) {
-            var image = data!!.extras!!["data"] as Bitmap?
-            val dimension = image!!.width.coerceAtMost(image.height)
-            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
-            binding.imgUploadPekerjaanSesudah.setImageBitmap(image)
+            imagePostAfter = data!!.extras!!["data"] as Bitmap?
+            val dimension = imagePostAfter!!.width.coerceAtMost(imagePostAfter!!.height)
+            imagePostAfter = ThumbnailUtils.extractThumbnail(imagePostAfter, dimension, dimension)
+            binding.imgUploadPekerjaanSesudah.setImageBitmap(imagePostAfter)
             binding.imgUploadPekerjaanSesudah.isGone = false
             binding.ivTrashImgSesudah.isVisible = true
         }
@@ -286,17 +290,6 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         tkItem = ArrayAdapter(this, R.layout.spinner_right_aligned, tkList)
         tkItem.setDropDownViewResource(R.layout.spinner_right_aligned)
     }
-    private fun getBundle(){
-        id = intent.extras?.getString("id") ?: "Tidak Terdeteksi"
-        idPelanggan = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
-        idPju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
-        titleDate = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
-        titleAdrress = intent.extras?.getString("alamat") ?: "Tidak Terdeteksi"
-        kondisi = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
-        lat = intent.extras?.getString("lat") ?: "Tidak Terdeteksi"
-        lot = intent.extras?.getString("lot") ?: "Tidak Terdeteksi"
-    }
-
     private fun convertTempFile(bitmap: Bitmap?): File? {
         val file = File(
             getExternalFilesDir(Environment.DIRECTORY_PICTURES),
@@ -316,6 +309,16 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         }
         return file
     }
+    private fun getBundle(){
+        idne = intent.extras?.getString("id") ?: "Tidak Terdeteksi"
+        idPelanggan = intent.extras?.getString("idpekerjaan") ?: "Tidak Terdeteksi"
+        idPju = intent.extras?.getString("idpju") ?: "Tidak Terdeteksi"
+        titleDate = intent.extras?.getString("tgl") ?: "Tidak Terdeteksi"
+        titleAdrress = intent.extras?.getString("alamat") ?: "Tidak Terdeteksi"
+        kondisi = intent.extras?.getString("kondisi") ?: "Tidak Terdeteksi"
+        lat = intent.extras?.getString("lat") ?: "Tidak Terdeteksi"
+        lot = intent.extras?.getString("lot") ?: "Tidak Terdeteksi"
+    }
 
     private fun toSpesifikasi(){
         val intent = Intent(this, SpesifikasiActivity::class.java)
@@ -327,6 +330,12 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         intent.putExtra("lat", lat)
         intent.putExtra("lot",lot)
         this.startActivity(intent)
+    }
+
+    private fun createPartFromString(descriptionString: String): RequestBody {
+        return RequestBody.create(
+            MultipartBody.FORM, descriptionString
+        )
     }
 
     private fun getCurrentDate(format: String): String {

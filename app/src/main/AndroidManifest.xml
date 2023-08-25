@@ -78,13 +78,7 @@
             android:exported="false" />
         <activity
             android:name=".view.penanganan.pekerjaan.TambahPekerjaanActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".view.penanganan.spesifikasi.SpesifikasiActivity"
             android:exported="false" />
@@ -99,15 +93,19 @@
             android:exported="false" />
         <activity
             android:name=".view.home.DashboardActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"/>
         <activity
             android:name=".view.auth.LoginActivity"
             android:exported="true" />
         <activity
             android:name=".view.splash.SplashScreenActivity"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />

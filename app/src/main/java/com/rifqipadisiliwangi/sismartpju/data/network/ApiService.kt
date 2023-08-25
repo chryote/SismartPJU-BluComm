@@ -28,11 +28,6 @@ interface ApiService {
     suspend fun login(
         @Body requestBody: LoginRequestIem
     ): Response<LoginResponseItem>
-    @Headers("Authorization: Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
-    @POST(Constants.PJU_PERBAIKAN)
-    suspend fun pjuPerbaikan(
-        @Body requestBody: PerbaikanRequestItem
-    ): Response<PerbaikanResponseItem>
 
     @Headers("Authorization: Basic RGlzaHViZGF0YWxwanUyMTI6ZGF0YWxwanVEaXNodWIyMTI=")
     @GET(Constants.PJU_ERROR)
@@ -40,9 +35,11 @@ interface ApiService {
 
     @Headers("Authorization: Basic RGlzaHVicGVyYmFpa2FucGp1MjEyOnBlcmJhaWthbnBqdURpc2h1YjIxMg==")
     @Multipart
-    @POST("android/uploadfoto2.php")
+    @POST(Constants.PJU_PERBAIKAN)
     fun addPhoto(
-        @Part image: MultipartBody.Part?
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part image: MultipartBody.Part?,
+        @Part imageAfter: MultipartBody.Part?
     ): Call<ResponsePicturePerbaikan>
 
 }
