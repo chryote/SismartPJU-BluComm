@@ -1,5 +1,6 @@
 package com.rifqipadisiliwangi.sismartpju.view.pairing.pairingsatu
 
+import PopupCommandActivity
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -23,10 +24,11 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.rifqipadisiliwangi.sismartpju.R
 import com.rifqipadisiliwangi.sismartpju.databinding.ActivityAddpairingBinding
 import com.rifqipadisiliwangi.sismartpju.view.adapter.bluetooth.BluetoothDeviceAdapter
+import android.widget.Button
 import com.rifqipadisiliwangi.sismartpju.view.home.DashboardActivity
 
 class AddPairingActivity : AppCompatActivity() {
-     
+
     private val TAG = "bt-dev"
     private val REQUEST_ENABLE_BT = 1
 
@@ -35,6 +37,7 @@ class AddPairingActivity : AppCompatActivity() {
     var progressIndicator: LinearProgressIndicator? = null
     var scanButton: ImageView? = null
     var enableBluetooth: MaterialButton? = null
+    var buttonCommand: MaterialButton? = null
 
     var pairedDevices = ArrayList<BluetoothDevice>()
     var bluetoothDeviceAdapter: BluetoothDeviceAdapter = BluetoothDeviceAdapter(pairedDevices, this)
@@ -42,9 +45,14 @@ class AddPairingActivity : AppCompatActivity() {
     var newDevices = ArrayList<BluetoothDevice>()
     var newDevicesAdapter: BluetoothDeviceAdapter = BluetoothDeviceAdapter(newDevices, this)
 
+
     private val newDevicesReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
+            // Get the bluetoothDevices list
+            val devicesList = bluetoothDeviceAdapter.getBluetoothDevicesList()
+            Log.d(TAG, "111Current devices: $devicesList)")
+            Log.d(TAG, "Bluetooth Adapter State: ${bluetoothAdapter!!.state}")
             if (BluetoothDevice.ACTION_FOUND == action) {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
@@ -57,11 +65,21 @@ class AddPairingActivity : AppCompatActivity() {
                 if (newDevices.contains(device)) {
                     return
                 }
+
                 //                String deviceName = device.getName();
 //                String deviceHardwareAddress = device.getAddress(); // MAC address
 //                Log.i("bt-dev", deviceName + " " + deviceHardwareAddress);
+                if (!bluetoothDeviceAdapter.containsDevice(device)) {
+                    bluetoothDeviceAdapter.addBluetoothDevice(device) // Add the device to the adapter
+                    // Log the newly discovered device
+                    Log.d(TAG, "New Bluetooth Device Added: ${device.name} (${device.address})")
+                }
+
                 newDevices.add(device)
+                Log.i("array list Bluetooth Devices", "$newDevices")
                 newDevicesAdapter.notifyDataSetChanged()
+                // Log the newly discovered device
+                Log.d(TAG, "New Bluetooth Device Found: ${device.name} (${device.address})")
             }
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
                 progressIndicator!!.show()
@@ -115,6 +133,7 @@ class AddPairingActivity : AppCompatActivity() {
                     }
 
                     BluetoothAdapter.STATE_ON -> {
+                        Log.d(TAG, "Bluetooth Adapter State!: ${bluetoothAdapter!!.state}")
                         enableBluetooth!!.visibility = View.GONE
                         checkPermission()
                         //                        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -144,9 +163,7 @@ class AddPairingActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
-        binding.btnAdd.setOnClickListener {
-            startActivity(Intent(this, PairingSatuActivity::class.java))
-        }
+
 
         checkPermission()
 
@@ -156,8 +173,54 @@ class AddPairingActivity : AppCompatActivity() {
         progressIndicator = findViewById(R.id.progressIndicator)
         scanButton = findViewById(R.id.scanDevice)
         enableBluetooth = findViewById(R.id.bluetoothEnables)
+        buttonCommand = findViewById(R.id.buttonCommand)
+        buttonCommand?.setOnClickListener {
+            val popup = PopupCommandActivity(this) {
+                // Handle connection without passing any parameters initially
+                // This is where you can initiate the connection using the selected Bluetooth device and user input
+                // No need to use connectionParameters in this case
+            }
+            popup.show()
+        }
 
         progressIndicator!!.hide()
+
+        fun pairBluetoothDevice(device: BluetoothDevice) {
+            Log.d(TAG, "Current Device List: $device")
+            Log.d(TAG, "(Pair Button)Selected Bluetooth Device for Pairing: ${device.name} (${device.address})")
+            try {
+                val isPaired = device.createBond()
+                if (isPaired) {
+                    // Pairing initiated successfully
+                    Log.d(TAG, "Pairing initiated with ${device.name} (${device.address})")
+                } else {
+                    // Pairing failed
+                    Log.d(TAG, "Pairing failed with ${device.name} (${device.address})")
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions
+                Log.e(TAG, "Error pairing with device: ${e.message}")
+            }
+        }
+
+        val pairButton = findViewById<Button>(R.id.pairButton)
+        pairButton.setOnClickListener {
+            // Handle the "Pair" button click here
+            val selectedDevice = bluetoothDeviceAdapter.getSelectedDevicePosition()
+            val selectedPosition = bluetoothDeviceAdapter.findBluetoothDeviceIndex(selectedDevice)
+            Log.d(TAG, "Current Position: $selectedPosition)")
+            if (selectedPosition != -1) {
+
+                val selectedDevice = bluetoothDeviceAdapter.getSelectedBluetoothDevice(selectedPosition)
+                if (selectedDevice != null) {
+                    pairBluetoothDevice(selectedDevice)
+                }
+            } else {
+                // Handle the case where no device is selected
+                // You can show a message to the user
+                Toast.makeText(this, "No device selected for pairing", Toast.LENGTH_SHORT).show()
+            }
+        }
 
 
 //      Check for bluetooth availability
@@ -170,7 +233,7 @@ class AddPairingActivity : AppCompatActivity() {
         )
         bluetoothAdapter = bluetoothManager.adapter
 
-        if (!bluetoothAdapter!!.isEnabled()) {
+        if (!bluetoothAdapter!!.isEnabled) {
 //            availibilityIcon.setBackgroundColor(Color.RED);
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
@@ -186,7 +249,7 @@ class AddPairingActivity : AppCompatActivity() {
         pairedDevices = ArrayList(bluetoothAdapter!!.bondedDevices)
         bluetoothDeviceAdapter = BluetoothDeviceAdapter(pairedDevices, this)
 
-        newDevicesRecycler!!.setAdapter(newDevicesAdapter)
+        newDevicesRecycler!!.adapter = newDevicesAdapter
 
 
 
@@ -209,6 +272,8 @@ class AddPairingActivity : AppCompatActivity() {
                 Log.v("bt-dev", "canceling discovering")
                 bluetoothAdapter!!.cancelDiscovery()
             } else {
+                Log.d(TAG, "Bluetooth Adapter State: ${bluetoothAdapter!!.state}")
+                Log.v("bt-dev", "start discovering")
                 bluetoothAdapter!!.cancelDiscovery()
                 bluetoothAdapter!!.startDiscovery()
             }
@@ -264,10 +329,6 @@ class AddPairingActivity : AppCompatActivity() {
                 )
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onDestroy() {

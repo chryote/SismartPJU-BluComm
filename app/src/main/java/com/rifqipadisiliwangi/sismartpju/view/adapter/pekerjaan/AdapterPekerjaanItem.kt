@@ -29,7 +29,7 @@ class AdapterPekerjaanItem(
         val view = binding
 
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterPekerjaanItem.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ItemPekerjaanBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(view)
     }

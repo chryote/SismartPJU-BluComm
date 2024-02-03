@@ -32,6 +32,8 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -113,7 +115,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
 //            requestImage = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
                 Log.d(TAG, "image-file : $imageFile")
                 val mimeType = "image/${imageFile!!.extension}"
-                requestImage = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
+                requestImage = imageFile.asRequestBody(mimeType.toMediaTypeOrNull())
                 imagePart = MultipartBody.Part.createFormData("foto1", imageFile.name, requestImage)
             } else {
                 // The user has not selected an image
@@ -132,7 +134,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
                 val imageFile = convertTempFile(imagePostAfter)
                 Log.d(TAG, "image-file : $imageFile")
                 val mimeType = "image/${imageFile!!.extension}"
-                requestImageAfter = RequestBody.create(mimeType.toMediaTypeOrNull(), imageFile)
+                requestImageAfter = imageFile.asRequestBody(mimeType.toMediaTypeOrNull())
                 imagePartAfter = MultipartBody.Part.createFormData("foto2", imageFile.name, requestImageAfter)
             } else {
                 // The user has not selected an image
@@ -290,7 +292,7 @@ class TambahPekerjaanActivity : AppCompatActivity() {
         tkItem = ArrayAdapter(this, R.layout.spinner_right_aligned, tkList)
         tkItem.setDropDownViewResource(R.layout.spinner_right_aligned)
     }
-    private fun convertTempFile(bitmap: Bitmap?): File? {
+    private fun convertTempFile(bitmap: Bitmap?): File {
         val file = File(
             getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             System.currentTimeMillis().toString() + "_image.png"
@@ -333,9 +335,8 @@ class TambahPekerjaanActivity : AppCompatActivity() {
     }
 
     private fun createPartFromString(descriptionString: String): RequestBody {
-        return RequestBody.create(
-            MultipartBody.FORM, descriptionString
-        )
+        return descriptionString
+            .toRequestBody(MultipartBody.FORM)
     }
 
     private fun getCurrentDate(format: String): String {

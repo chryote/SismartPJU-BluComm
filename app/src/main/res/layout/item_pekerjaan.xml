@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -126,6 +128,7 @@
 
             <TextView
                 android:text="Baterai"
+                android:id="@+id/textViewBaterai"
                 android:background="@drawable/rounded_red"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_20sdp"
@@ -138,6 +141,7 @@
             <TextView
                 android:background="@drawable/rounded_orange"
                 android:text="Lampu"
+
                 android:layout_marginHorizontal="5sp"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_20sdp"

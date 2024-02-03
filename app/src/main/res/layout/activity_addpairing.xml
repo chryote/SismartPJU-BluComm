@@ -60,11 +60,11 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/const_field_add"
@@ -78,33 +78,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/progressbar_one"
-                app:layout_constraintTop_toTopOf="@id/const_field_add"
+                app:layout_constraintEnd_toEndOf="@id/const_field_add"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
-                app:layout_constraintEnd_toEndOf="@id/const_field_add"/>
+                app:layout_constraintTop_toTopOf="@id/const_field_add" />
 
             <TextView
                 android:id="@+id/tv_tittle_key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_40sdp"
                 android:fontFamily="@font/inter_medium"
+                android:text="Sambungkan perangkat baru :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
-                android:text="Sambungkan perangkat baru :"
-                android:layout_marginVertical="@dimen/_40sdp"
-                app:layout_constraintTop_toBottomOf="@+id/progressbar"
-                app:layout_constraintStart_toStartOf="@id/const_field_add"/>
+                app:layout_constraintStart_toStartOf="@id/const_field_add"
+                app:layout_constraintTop_toBottomOf="@+id/progressbar" />
 
 
             <Button
                 android:id="@+id/bluetoothEnables"
+                style="@style/optionbutton"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
-                style="@style/optionbutton"
                 android:contentDescription="RefreshButton"
                 android:text="Hidupkan Bluetooth"
                 android:textAllCaps="false"
-                android:visibility="gone"
                 android:textSize="@dimen/_10ssp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_tittle_key"
                 app:layout_constraintEnd_toEndOf="@+id/const_field_add"
                 app:layout_constraintTop_toTopOf="@+id/tv_tittle_key" />
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Tambah Perangkat"
+                    android:text="Tambah Perintah"
                     android:textAlignment="center"
                     android:textColor="@color/grey_font"
                     android:textSize="@dimen/_14ssp"
@@ -148,18 +148,32 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <Button
+                android:id="@+id/buttonCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/dark_blue"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="Perintah"
+                android:textColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@+id/bluetoothEnable"
+                app:layout_constraintBottom_toTopOf="@+id/progressIndicator"
+                app:layout_constraintStart_toStartOf="@+id/const_field_add"
+                app:layout_constraintEnd_toEndOf="@+id/const_field_add"/>
+
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progressIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="1dp"
                 android:indeterminate="true"
                 app:hideAnimationBehavior="inward"
-                app:layout_constraintBottom_toTopOf="@+id/tv_all_device"
+                app:layout_constraintTop_toBottomOf="@+id/buttonCommand"
                 app:layout_constraintEnd_toEndOf="@+id/const_field_add"
                 app:layout_constraintStart_toStartOf="@+id/const_field_add"
-                app:layout_constraintTop_toBottomOf="@+id/bluetoothEnable"
+                app:layout_constraintBottom_toTopOf="@+id/tv_all_device"
                 app:showAnimationBehavior="outward" />
 
             <TextView
@@ -169,8 +183,8 @@
                 android:layout_marginVertical="@dimen/_12sdp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/inter_medium"
-                android:textColor="@color/black"
                 android:text="Device yang tersedia :"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
                 app:layout_constraintTop_toBottomOf="@+id/progressIndicator" />
 
@@ -189,19 +203,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:textColor="@color/black"
                 android:text="Tambah lokasi :"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
                 app:layout_constraintTop_toBottomOf="@+id/newDevicesRecyclerView" />
+
             <TextView
                 android:id="@+id/tv_change_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_5sdp"
-                android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/inter_bold"
-                android:textColor="@color/dark_blue"
                 android:text="Ubah"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@+id/const_field_add"
                 app:layout_constraintTop_toBottomOf="@+id/newDevicesRecyclerView" />
 
@@ -209,8 +224,8 @@
                 android:id="@+id/iv_location"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_map_marker"
                 android:layout_marginVertical="@dimen/_12sdp"
+                android:src="@drawable/ic_map_marker"
                 app:layout_constraintStart_toStartOf="@id/const_field_add"
                 app:layout_constraintTop_toBottomOf="@+id/tv_add_location" />
 
@@ -218,42 +233,34 @@
                 android:id="@+id/tv_address"
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="wrap_content"
-                android:text="Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta"
-                android:textSize="@dimen/_14ssp"
-                android:maxLines="3"
-                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/inter_medium"
+                android:maxLines="3"
+                android:text="Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta"
                 android:textColor="@color/grey_font"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toEndOf="@+id/iv_location"
-                app:layout_constraintTop_toBottomOf="@+id/tv_add_location"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_location" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/btn_add"
+
+        <Button
+            android:id="@+id/pairButton"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:orientation="horizontal"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:gravity="center"
             android:layout_gravity="bottom"
+            android:backgroundTint="@color/dark_blue"
+            android:gravity="center"
+
+            android:orientation="horizontal"
+            android:text="Pair"
+            android:textColor="#FFF"
             app:layout_constraintBottom_toBottomOf="@+id/const_field_add"
-            app:layout_constraintStart_toStartOf="@+id/const_field_add"
             app:layout_constraintEnd_toEndOf="@+id/const_field_add"
-            android:background="@color/dark_blue">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tambahkan"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:fontFamily="@font/inter_semi_bold"
-                android:textSize="@dimen/_12ssp" />
-
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="@+id/const_field_add" />
 
     </androidx.cardview.widget.CardView>
 

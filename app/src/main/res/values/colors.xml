@@ -11,6 +11,7 @@
     <color name="soft_blue">#C4E0F0</color>
     <color name="dark_blue">#063A69</color>
     <color name="semi_blue">#00A3FF</color>
+    <color name="arus_blue">#0085AD</color>
     <color name="light_blue">#E5F6FF</color>
     <color name="grey_bg">#F4F4F4</color>
     <color name="grey_gradien">#4024524D</color>
@@ -20,6 +21,7 @@
     <color name="grey_font_detail">#697088</color>
     <color name="light_red">#F7BDB8</color>
     <color name="dark_yellow">#FBBE33</color>
+    <color name="selectedItemColor">#00A3FF</color>
     <color name="light_yellow">#FEE8B8</color>x
     <color name="dark_green">#84BD00</color>x
 

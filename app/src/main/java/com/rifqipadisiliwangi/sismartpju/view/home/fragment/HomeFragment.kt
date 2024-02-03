@@ -120,8 +120,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 }
                 if (listPju.isNotEmpty()) {
                     val pjuReport = listPju.first()
-                    val firstLatLng = LatLng(pjuReport.latitude?.toDoubleOrNull() ?: 0.0,
-                        pjuReport.longitude?.toDoubleOrNull() ?: 0.0)
+                    val firstLatLng = LatLng(
+                        pjuReport.latitude.toDoubleOrNull() ?: 0.0,
+                        pjuReport.longitude.toDoubleOrNull() ?: 0.0)
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 12f))
                 }
             }else {

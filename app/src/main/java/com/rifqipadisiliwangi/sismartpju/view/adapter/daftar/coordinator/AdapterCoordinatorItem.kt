@@ -11,9 +11,8 @@ import com.rifqipadisiliwangi.sismartpju.view.detail.DetailPekerjaanActivity
 
 class AdapterCoordinatorItem(private var pekerjaan : ArrayList<Coordinator>): RecyclerView.Adapter<AdapterCoordinatorItem.ListViewHolder>() {
 
-    class ListViewHolder(val binding : ItemDaftarCoordinatorBinding): RecyclerView.ViewHolder(binding.root){
+    class ListViewHolder(val binding : ItemDaftarCoordinatorBinding): RecyclerView.ViewHolder(binding.root)
 
-    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

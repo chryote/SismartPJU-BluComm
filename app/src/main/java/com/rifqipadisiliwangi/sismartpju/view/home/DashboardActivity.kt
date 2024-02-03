@@ -3,6 +3,7 @@ package com.rifqipadisiliwangi.sismartpju.view.home
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import com.rifqipadisiliwangi.sismartpju.R
